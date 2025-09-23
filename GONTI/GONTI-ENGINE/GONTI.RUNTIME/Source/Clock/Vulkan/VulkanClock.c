@@ -2,7 +2,7 @@
 
 #if GONTI_USE_VULKAN
 
-#include <GONTI/GONTI-ENGINE/GONTI.RENDER/Source/Platform/Vulkan/VulkanPlatform.h>
+#include <GONTI/GONTI-ENGINE/GONTI.RENDER.VK/Source/Platform/VulkanPlatform.h>
 
 void gontiVkClockUpdate(Clock* clock) {
     if (clock->startTime != 0) {

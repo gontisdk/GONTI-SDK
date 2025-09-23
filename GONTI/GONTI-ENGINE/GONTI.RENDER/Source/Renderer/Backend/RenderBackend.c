@@ -1,8 +1,8 @@
 #include "RenderBackend.h"
 
-#include "Vulkan/VulkanRenderBackend.h"
-#include "../../Config/SetupGraphicBackend/UserSetGraphicBackend.h"
+#include <GONTI/GONTI-ENGINE/GONTI.RENDER.VK/Source/Render/Backend/VulkanRenderBackend.h>
 #include <GONTI/GONTI-ENGINE/GONTI.CORE/Source/Logging/Logger.h>
+#include "../../Config/SetupGraphicBackend/UserSetGraphicBackend.h"
 
 b8 gontiRendererBackendCreate(GontiRendererBackendType type, struct GontiVulkanPlatformState* platState, GontiRendererBackend* outRendererBackend) {
     outRendererBackend->GontiVulkanPlatformState = platState;
@@ -10,7 +10,7 @@ b8 gontiRendererBackendCreate(GontiRendererBackendType type, struct GontiVulkanP
     if (type == RENDERER_BACKEND_TYPE_VULKAN) {
         #if GONTI_USE_VULKAN
             outRendererBackend->initialize = gontiVkRendererBackendInitialize;
-            outRendererBackend-> shutdown = gontiVkRendererBackendShutdown;
+            outRendererBackend->shutdown = gontiVkRendererBackendShutdown;
             outRendererBackend->beginFrame = gontiVkRendererBackendBeginFrame;
             outRendererBackend->endFrame = gontiVkRendererBackendEndFrame;
             outRendererBackend->resized = gontiVkRendererBackendOnResized;

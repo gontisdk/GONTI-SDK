@@ -30,64 +30,59 @@ echo(
 echo(
 
 
-if not exist "..\..\..\..\_Build/" (
-    mkdir "..\..\..\..\_Build/"
+if not exist "..\..\..\..\_Build/bin" (
+    mkdir "..\..\..\..\_Build/bin"
 )
 
-cd ..\..\..\..\_Build
+cd ..\..\..\..\_Build\bin
 
 rem Upewnij się, że folder build istnieje
-if not exist "win/testbed" (
-    mkdir "win/testbed"
+if not exist "win32/testbed" (
+    mkdir "win32/testbed"
 )
 
-cd win/testbed
+cd win32/testbed
 
 rem Ścieżki do bibliotek
-<<<<<<< HEAD
 set vcpkgIncludeDir=C:/Program Files (x86)/VulkanSDK/1.4.321.1/Include
 set vcpkgLibDir=C:/Program Files (x86)/VulkanSDK/1.4.321.1/Lib
 
 set workspaceFoldersInclude=D:\Projects\Visual Studio Code Projects\C++\GONTI SDK
-set GONTI-CORE-Libs-Dir=D:\Projects\Visual Studio Code Projects\C++\GONTI SDK\_Build\win\bin\GONTI\GONTI-ENGINE\GONTI.CORE
-set GONTI-RENDER-Libs-Dir=D:\Projects\Visual Studio Code Projects\C++\GONTI SDK\_Build\win\bin\GONTI\GONTI-ENGINE\GONTI.RENDER
-set GONTI-RUNTIME-Libs-Dir=D:\Projects\Visual Studio Code Projects\C++\GONTI SDK\_Build\win\bin\GONTI\GONTI-ENGINE\GONTI.RUNTIME
-=======
-set vcpkgIncludeDir=D:/Programs Files/vcpkg/vcpkg/installed/x64-windows/include
-set vcpkgLibDir=D:/Programs Files/vcpkg/vcpkg/installed/x64-windows/lib
-
-set IncludeDirGLFW=D:/Dokumenty/My Liblares to C++/glfw-3.4.bin.WIN64/include
-set LibDirGLFW=D:/Dokumenty/My Liblares to C++/glfw-3.4.bin.WIN64/lib-vc2022
->>>>>>> 475c679c815ea5f049414def8adf10b6b1ed375a
+set GONTI-CORE-Libs-Dir=D:\Projects\Visual Studio Code Projects\C++\GONTI SDK\_Build\bin\win32\GONTI\GONTI-ENGINE\GONTI.CORE
+set GONTI-RENDER-VK-Libs-Dir=D:\Projects\Visual Studio Code Projects\C++\GONTI SDK\_Build\bin\win32\GONTI\GONTI-ENGINE\GONTI.RENDER.VK
+set GONTI-RENDER-Libs-Dir=D:\Projects\Visual Studio Code Projects\C++\GONTI SDK\_Build\bin\win32\GONTI\GONTI-ENGINE\GONTI.RENDER
+set GONTI-RUNTIME-Libs-Dir=D:\Projects\Visual Studio Code Projects\C++\GONTI SDK\_Build\bin\win32\GONTI\GONTI-ENGINE\GONTI.RUNTIME
 
 rem Kompilacja
 set assembly=testbed
 set compilerFlags=-g
-<<<<<<< HEAD
 set includeFlags=-I"%workspaceFoldersInclude%" -I"%vcpkgIncludeDir%"
-set linkerFlags=-L"..\bin" -L"%GONTI-CORE-Libs-Dir%" -L"%GONTI-RENDER-Libs-Dir%", -L"%GONTI-RUNTIME-Libs-Dir%" -L"%vcpkgLibDir%" -luser32 -lGONTI.CORE -lGONTI.RENDER -lGONTI.RUNTIME -lvulkan-1
-=======
-set includeFlags=-I"GONTI" -I"%vcpkgIncludeDir%" -I"%IncludeDirGLFW%"
-set linkerFlags=-L"..\bin" -lGONTI/GONTI -L"%vcpkgLibDir%" -L"%LibDirGLFW%" -luser32 -lglfw3
->>>>>>> 475c679c815ea5f049414def8adf10b6b1ed375a
+set linkerFlags=-L"..\bin" -L"%GONTI-CORE-Libs-Dir%" -L"%GONTI-RENDER-Libs-Dir%" -L"%GONTI-RENDER-VK-Libs-Dir%" -L"%GONTI-RUNTIME-Libs-Dir%" -L"%vcpkgLibDir%" -luser32 -lGONTI.CORE -lGONTI.RENDER -lGONTI.RENDER.VK -lGONTI.RUNTIME -lvulkan-1
 set defines=-D_DEBUG -DKIMPORT
 
 echo Building %assembly%...
 
-<<<<<<< HEAD
 echo(
 echo(
 
 echo Copying GONTI.CORE.dll to testbed directory...
-copy "..\bin\GONTI\GONTI-ENGINE\GONTI.CORE\GONTI.CORE.dll" ".\GONTI.CORE.dll" /Y > nul
+copy "..\GONTI\GONTI-ENGINE\GONTI.CORE\GONTI.CORE.dll" ".\GONTI.CORE.dll" /Y > nul
 if %ERRORLEVEL% NEQ 0 (
     echo [ERROR] Failed to copy GONTI.CORE.dll!
 ) else (
     echo [SUCCESS] GONTI.CORE.dll copied successfully.
 )
 
+echo Copying GONTI.RENDER.VK.dll to testbed directory...
+copy "..\GONTI\GONTI-ENGINE\GONTI.RENDER.VK\GONTI.RENDER.VK.dll" ".\GONTI.RENDER.VK.dll" /Y > nul
+if %ERRORLEVEL% NEQ 0 (
+    echo [ERROR] Failed to copy GONTI.RENDER.VK.dll!
+) else (
+    echo [SUCCESS] GONTI.RENDER.VK.dll copied successfully.
+)
+
 echo Copying GONTI.RENDER.dll to testbed directory...
-copy "..\bin\GONTI\GONTI-ENGINE\GONTI.RENDER\GONTI.RENDER.dll" ".\GONTI.RENDER.dll" /Y > nul
+copy "..\GONTI\GONTI-ENGINE\GONTI.RENDER\GONTI.RENDER.dll" ".\GONTI.RENDER.dll" /Y > nul
 if %ERRORLEVEL% NEQ 0 (
     echo [ERROR] Failed to copy GONTI.RENDER.dll!
 ) else (
@@ -95,7 +90,7 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo Copying GONTI.RUNTIME.dll to testbed directory...
-copy "..\bin\GONTI\GONTI-ENGINE\GONTI.RUNTIME\GONTI.RUNTIME.dll" ".\GONTI.RUNTIME.dll" /Y > nul
+copy "..\GONTI\GONTI-ENGINE\GONTI.RUNTIME\GONTI.RUNTIME.dll" ".\GONTI.RUNTIME.dll" /Y > nul
 if %ERRORLEVEL% NEQ 0 (
     echo [ERROR] Failed to copy GONTI.RUNTIME.dll!
 ) else (
@@ -105,16 +100,6 @@ if %ERRORLEVEL% NEQ 0 (
 echo(
 echo(
 
-=======
-echo Copying GONTI.dll to testbed directory...
-copy "..\bin\GONTI\GONTI.dll" ".\GONTI.dll" /Y > nul
-if %ERRORLEVEL% NEQ 0 (
-    echo [ERROR] Failed to copy GONTI.dll!
-) else (
-    echo GONTI.dll copied successfully.
-)
-
->>>>>>> 475c679c815ea5f049414def8adf10b6b1ed375a
 echo(
 echo(
 echo ======================================================================

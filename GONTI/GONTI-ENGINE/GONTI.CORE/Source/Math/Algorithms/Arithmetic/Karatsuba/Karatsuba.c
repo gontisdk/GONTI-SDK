@@ -85,8 +85,8 @@ int* gontiKaratsubaMultiplyIntArr(
 
     if (range <= KARATSUBA_THRESHOLD) {
         return gontiKaratsubaMultiplyLongIntArr(
-            arr1, idxI, MIN(arr1Size, idxF),
-            arr2, idxI, MIN(arr2Size, idxF),
+            arr1, idxI, K_MIN(arr1Size, idxF),
+            arr2, idxI, K_MIN(arr2Size, idxF),
             outSize
         );
     }

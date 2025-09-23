@@ -48,7 +48,7 @@ bigint gontiBigintStrToBigint(char* str) {
     unsigned int noDigits;
     unsigned int extra;
 
-    gonti_math.divMod(effectiveLen, BIGINT_NO_BASE_DIGITS, &noDigits, &extra);
+    gontiMathDivMod(effectiveLen, BIGINT_NO_BASE_DIGITS, &noDigits, &extra);
 
     if (extra) noDigits++;
 
@@ -109,25 +109,25 @@ bigint gontiBigintNewBigintLL(long long ll) {
     return ret;
 }
 bigint gontiBigintNewPositiveBigint(unsigned int i) {
-    unsigned int noDigits = gonti_math.numDigits(1, BIGINT_BASE);
+    unsigned int noDigits = gontiMathNumDigits(1, BIGINT_BASE);
 
     bigint ret = gontiBigintAllocate(noDigits);
     ret.noDigits = noDigits;
 
     for (unsigned int idx = 0; idx < noDigits; idx++) {
-        gonti_math.divMod(i, BIGINT_BASE, &i, (unsigned int*)&ret.digits[idx]);
+        gontiMathDivMod(i, BIGINT_BASE, &i, (unsigned int*)&ret.digits[idx]);
     }
 
     return ret;
 }
 bigint gontiBigintNewPositiveBigintLL(unsigned long long ll) {
-    unsigned long long noDigits = gonti_math.numDigitsLL(1, BIGINT_BASE);
+    unsigned long long noDigits = gontiMathNumDigitsLL(1, BIGINT_BASE);
 
     bigint ret = gontiBigintAllocate(noDigits);
     ret.noDigits = noDigits;
 
     for (unsigned int i = 0; i < noDigits; i++) {
-        gonti_math.divModLL(ll, BIGINT_BASE, &ll, (unsigned long long*)&ret.digits[i]);
+        gontiMathDivModLL(ll, BIGINT_BASE, &ll, (unsigned long long*)&ret.digits[i]);
     }
 
     return ret;
@@ -141,7 +141,7 @@ bigint gontiBigintAdd(bigint bi1, bigint bi2) {
         return gontiBigintSubtract(bi2, bi1);
     }
 
-    unsigned int noDigits = MAX(bi1.noDigits, bi2.noDigits) + 1;
+    unsigned int noDigits = K_MAX(bi1.noDigits, bi2.noDigits) + 1;
 
     bigint ret = gontiBigintAllocate(noDigits);
     ret.noDigits = noDigits;
@@ -253,8 +253,8 @@ bigint gontiBigintMultiply(bigint bi1, bigint bi2) {
         );
     }
 
-    unsigned int minNoDigits = MIN(bi1.noDigits, bi2.noDigits); //bi1.noDigits;
-    unsigned int maxNoDigits = MAX(bi1.noDigits, bi2.noDigits); //bi2.noDigits;
+    unsigned int minNoDigits = K_MIN(bi1.noDigits, bi2.noDigits); //bi1.noDigits;
+    unsigned int maxNoDigits = K_MAX(bi1.noDigits, bi2.noDigits); //bi2.noDigits;
 
     //if (bi1.noDigits > bi2.noDigits) {
     //    minNoDigits = bi2.noDigits;
@@ -296,7 +296,7 @@ bigint gontiBigintLongMultiply(bigint bi1, bigint bi2) {
 bigint gontiBigintKaratsubaMultiply(bigint bi1, bigint bi2) {
     bool sign = !(bi1.sign ^ bi2.sign);
 
-    unsigned int maxNoDigits = MAX(bi1.noDigits, bi2.noDigits);
+    unsigned int maxNoDigits = K_MAX(bi1.noDigits, bi2.noDigits);
     unsigned int noDigits;
     int* retArr = gontiKaratsubaMultiplyIntArr(
         bi1.digits, bi1.noDigits,
@@ -320,7 +320,7 @@ char* gontiBigintPtrToString(bigint* bi) {
     if (!bi->noDigits) return "0";
 
     unsigned int noChars = (bi->noDigits - 1) * BIGINT_NO_BASE_DIGITS;
-    unsigned int noDigitsLast = gonti_math.numDigits(bi->digits[bi->noDigits - 1], 10);
+    unsigned int noDigitsLast = gontiMathNumDigits(bi->digits[bi->noDigits - 1], 10);
 
     noChars += noDigitsLast;
 
@@ -346,7 +346,7 @@ char* gontiBigintPtrToString(bigint* bi) {
         unsigned int digit = bi->digits[digitInx - 1];
 
         while (offset--) {
-            gonti_math.divMod(digit, 10, &digit, &strDigit);
+            gontiMathDivMod(digit, 10, &digit, &strDigit);
             ret [strIdx + offset] = '0' + strDigit;
         }
 

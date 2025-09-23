@@ -14,7 +14,7 @@ b8 gontiRendererInitialize(const char* appName, struct GontiVulkanPlatformState*
     gontiRendererBackendCreate(RENDERER_BACKEND_TYPE_VULKAN, platState, backend);
     backend->frameNumber = 0;
 
-    if (!backend->initialize(backend, appName, platState)) {
+    if (!backend->initialize(appName, platState)) {
         KFATAL("Renderer backend failed to initialize. Shutting down...");
         return false;
     }
@@ -22,10 +22,10 @@ b8 gontiRendererInitialize(const char* appName, struct GontiVulkanPlatformState*
     return true;
 }
 b8 gontiRendererBeginFrame(f32 deltaTime) {
-    return backend->beginFrame(backend, deltaTime);
+    return backend->beginFrame(deltaTime);
 }
 b8 gontiRendererEndFrame(f32 deltaTime) {
-    b8 result = backend->endFrame(backend, deltaTime);
+    b8 result = backend->endFrame(deltaTime);
     backend->frameNumber++;
     return result;
 }
@@ -48,7 +48,7 @@ void gontiRendererShutdown() {
 }
 void gontiRendererOnResized(u16 width, u16 height) {
     if (backend) {
-        backend->resized(backend, width, height);
+        backend->resized(width, height);
     } else {
         KWARN("Renderer backend does not exist to accept resize: %i:%i", width, height);
     }

@@ -3,8 +3,6 @@
 
 // SAMPLE USER GAME INIT FUNC
 b8 gameInitialize(GontiVulkanEntry* gameInst) {
-    KDEBUG("gameInitialize() called!");
-
     gontiEventRegister(GONTI_EVENT_CODE_APPLICATION_QUIT, 0, applicationOnEvent);
     gontiEventRegister(GONTI_EVENT_CODE_APPLICATION_PAUSE, 0, applicationOnEvent);
     gontiEventRegister(GONTI_EVENT_CODE_APPLICATION_RESUME, 0, applicationOnEvent);

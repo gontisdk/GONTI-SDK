@@ -5,8 +5,8 @@
       "name": "Launch Overdrive 2069 (Windows)",
       "type": "cppvsdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/_Build/win/testbed/testbed.exe",
-      "cwd": "${workspaceFolder}/_Build/win/testbed/",
+      "program": "${workspaceFolder}/_Build/bin/win32/testbed/testbed.exe",
+      "cwd": "${workspaceFolder}/_Build/bin/win32/testbed/",
       "console": "externalTerminal",
       "stopAtEntry": false
     },

@@ -10,7 +10,7 @@
         #if GONTI_USE_VULKAN
 
             #include <GONTI/GONTI-ENGINE/GONTI.CORE/Source/Defines/Defines.h>
-            #include <GONTI/GONTI-ENGINE/GONTI.RENDER/Source/Platform/Vulkan/VulkanPlatform.h>
+            #include <GONTI/GONTI-ENGINE/GONTI.RENDER.VK/Source/Platform/VulkanPlatform.h>
             #include "../InputSystem/Inputs.h"
 
             #if KPLATFORM_WINDOWS

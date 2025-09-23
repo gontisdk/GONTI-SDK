@@ -5,7 +5,7 @@
     extern "C" {
 #endif
 
-        #include "../../Types/Vulkan/VulkanContextTypes.inl"
+        #include <GONTI/GONTI-ENGINE/GONTI.RENDER.VK/Source/Types/VulkanContextTypes.inl>
         #include "../Types/RenderTypes.inl"
 
         struct GontiVulkanPlatformState;

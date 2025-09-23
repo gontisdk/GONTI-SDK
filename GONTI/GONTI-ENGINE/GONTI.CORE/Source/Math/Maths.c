@@ -4,21 +4,17 @@
 #include <stdlib.h>
 
 /*
-* }]===========================================[{ PRIVATE }]===========================================
-*/
-
-/*
 * VOID
 */
-void swap(int* a, int* b) {
+void gontiMathSwap(int* a, int* b) {
 	*a ^= *b;
 	*b = *a ^ *b;
 	*a ^= *b;
 }
-void swapFloat(float* a, float* b) {
-	swap((int*)a, (int*)b);
+void gontiMathSwapFloat(float* a, float* b) {
+	gontiMathSwap((int*)a, (int*)b);
 }
-void printUintArray(unsigned int* arr, unsigned int noElements) {
+void gontiMathPrintUintArray(unsigned int* arr, unsigned int noElements) {
 	printf("\n[ ");
 
 	for (unsigned int i = 0; i < noElements; i++) {
@@ -27,12 +23,12 @@ void printUintArray(unsigned int* arr, unsigned int noElements) {
 
 	printf("]\n");
 }
-void divMod(unsigned int num, unsigned int divisor, unsigned int* quotient, unsigned int* remainder) {
+void gontiMathDivMod(unsigned int num, unsigned int divisor, unsigned int* quotient, unsigned int* remainder) {
 	div_t res = div(num, divisor);
 	*quotient = res.quot;
 	*remainder = res.rem;
 }
-void divModLL(unsigned long long num, unsigned long long divisor, unsigned long long* quotient, unsigned long long* remainder) {
+void gontiMathDivModLL(unsigned long long num, unsigned long long divisor, unsigned long long* quotient, unsigned long long* remainder) {
 	lldiv_t res = lldiv(num, divisor);
 	*quotient = res.quot;
 	*remainder = res.rem;
@@ -41,7 +37,7 @@ void divModLL(unsigned long long num, unsigned long long divisor, unsigned long 
 /*
 * BOOL
 */
-bool containsUint(unsigned int* arr, unsigned int noElements, unsigned int target) {
+bool gontiMathContainsUint(unsigned int* arr, unsigned int noElements, unsigned int target) {
 	for (unsigned int i = 0; i < noElements; i++) {
 		if (arr[i] == target) return true;
 	}
@@ -52,7 +48,7 @@ bool containsUint(unsigned int* arr, unsigned int noElements, unsigned int targe
 /*
 * UNSIGNED INT
 */
-unsigned int numDigits(unsigned int val, unsigned int base) {
+unsigned int gontiMathNumDigits(unsigned int val, unsigned int base) {
 	if (base <= 1) return 0;
 
 	unsigned int ret = 0;
@@ -68,7 +64,7 @@ unsigned int numDigits(unsigned int val, unsigned int base) {
 /*
 * UNSIGNED LONG LONG
 */
-unsigned long long numDigitsLL(unsigned long long val, unsigned long long base) {
+unsigned long long gontiMathNumDigitsLL(unsigned long long val, unsigned long long base) {
 	if (base <= 1LL) return 0;
 
 	unsigned long long ret = 0;
@@ -81,25 +77,40 @@ unsigned long long numDigitsLL(unsigned long long val, unsigned long long base) 
 	return ret;
 }
 
-/*
-* ============================================[{ PUBLIC }]============================================
+/* 
+* F32 / FLOAT 
 */
+f32 gontiMathSin(f32 x) {
+	return 0;
+}
+f32 gontiMathCos(f32 x) {
+	return 0;
+}
+f32 gontiMathTan(f32 x) {
+	return 0;
+}
+f32 gontiMathAcos(f32 x) {
+	return 0;
+}
+f32 gontiMathSqrt(f32 x) {
+	return 0;
+}
+f32 gontiMathAbs(f32 x) {
+	return 0;
+}
+f32 gontiMathRandomFloat() {
+	return 0;
+}
+f32 gontiMathRandomFloatInRange(f32 min, f32 max) {
+	return 0;
+}
 
-/*gonti_math*/
-gontiMath gonti_math = {
-	/*VOID*/
-	.swap = swap,
-	.swapFloat = swapFloat,
-	.printUintArray = printUintArray,
-	.divMod = divMod,
-	.divModLL = divModLL,
-
-	/*BOOL*/
-	.containsUint = containsUint,
-
-	/*UNSIGNED INT*/
-	.numDigits = numDigits,
-
-	/*UNSIGNED LONG LONG*/
-	.numDigitsLL = numDigitsLL
-};
+/* 
+* I32 / INT 
+*/
+i32 gontiMathRandom() {
+	return 0;
+}
+i32 gontiMathRandomInRange(i32 min, i32 max) {
+	return 0;
+}

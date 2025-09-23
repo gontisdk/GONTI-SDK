@@ -5,9 +5,9 @@
     extern "C" {
 #endif
 
-        #include "../../Types/Vulkan/VulkanContextTypes.inl"
+        #include <GONTI/GONTI-ENGINE/GONTI.RENDER.VK/Source/Platform/VulkanPlatform.h>
+        #include <GONTI/GONTI-ENGINE/GONTI.RENDER.VK/Source/Types/VulkanContextTypes.inl>
         #include "../Types/RenderTypes.inl"
-        #include "../../Platform/Vulkan/VulkanPlatform.h"
 
         struct GontiStaticMeshData;
         struct GontiVulkanPlatformState;

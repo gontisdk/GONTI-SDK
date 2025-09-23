@@ -69,7 +69,6 @@ PhysicsEngine/
 │
 │
 ├── Math/
-<<<<<<< HEAD
 │ ├── gontiVectors/
 │ │ ├── gontiVectors.c
 │ │ ├── gontiVectors.h
@@ -77,15 +76,6 @@ PhysicsEngine/
 │ ├── gontiMatrices/
 │ │ ├── gontiMatrices.c
 │ │ ├── gontiMatrices.h
-=======
-│ ├── Vectors/
-│ │ ├── Vectors.c
-│ │ ├── Vectors.h
-│ │
-│ ├── Matrices/
-│ │ ├── Matrices.c
-│ │ ├── Matrices.h
->>>>>>> 475c679c815ea5f049414def8adf10b6b1ed375a
 │ │
 │ ├── Geometry/
 │ │

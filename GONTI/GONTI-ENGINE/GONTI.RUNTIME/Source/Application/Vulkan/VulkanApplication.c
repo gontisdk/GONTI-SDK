@@ -5,8 +5,9 @@
 #include <GONTI/GONTI-ENGINE/GONTI.CORE/Source/Logging/Logger.h>
 #include <GONTI/GONTI-ENGINE/GONTI.CORE/Source/Memory/Memory.h>
 #include <GONTI/GONTI-ENGINE/GONTI.CORE/Source/Platform/Platform.h>
-#include <GONTI/GONTI-ENGINE/GONTI.RENDER/Source/Platform/Vulkan/VulkanPlatform.h>
+#include <GONTI/GONTI-ENGINE/GONTI.RENDER.VK/Source/Platform/VulkanPlatform.h>
 #include <GONTI/GONTI-ENGINE/GONTI.RENDER/Source/Renderer/Frontend/RenderFrontend.h>
+#include <GONTI/GONTI-ENGINE/GONTI.RENDER.VK/Source/Render/Backend/VulkanRenderBackend.h>
 #include "../../Clock/Vulkan/VulkanClock.h"
 #include "../../Events/Platform/PlatformEvents.h"
 #include "../../Events/Events.h"
@@ -54,6 +55,9 @@ b8 gontiVkApplicationCreate(GontiVulkanEntry* entryInst) {
     #if KPLATFORM_LINUX
         appState.gontiPlatform.gontiVkInternalStateLinux.linux_process_message = LinuxProc;
     #endif
+
+    if (!appState.gontiPlatform.get_frame_buffer_size_ptr)
+        appState.gontiPlatform.get_frame_buffer_size_ptr = gontiVkApplicationGetFramebufferSizePtr;
 
     if (!gontiVkPlatformStartup(
         &appState.gontiPlatform,
