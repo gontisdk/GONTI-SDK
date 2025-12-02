@@ -44,7 +44,7 @@ b8 gontiRendererDrawFrame(GontiRendererPacket* packet) {
 
 void gontiRendererShutdown() {
     backend->shutdown(backend);
-    k_free(backend, sizeof(GontiRendererBackend), GONTI_MEMORY_TAG_RENDERER);
+    k_free(backend);
 }
 void gontiRendererOnResized(u16 width, u16 height) {
     if (backend) {

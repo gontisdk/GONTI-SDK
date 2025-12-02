@@ -20,17 +20,6 @@
             unsigned int* outSize
         );
 
-        /* VOID */
-        KAPI void gontiKaratsubaFreeLongIntArr(
-            unsigned int i1, unsigned int f1,
-            unsigned int i2, unsigned int f2,
-            int** outArr
-        );
-        KAPI void gontiKaratsubaFreeIntArr(
-            unsigned int i, unsigned int f,
-            int** outArr
-        );
-
         /*DEFINE*/
         #define KARATSUBA_THRESHOLD 4
 

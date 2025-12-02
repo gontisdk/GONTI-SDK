@@ -58,9 +58,22 @@ D:.
 |       |       |   |   |       BigInteger.h
 |       |       |   |   |       
 |       |       |   |   +---Matrices
-|       |       |   |   |   \---Matrix
-|       |       |   |   |           Matrix.c
-|       |       |   |   |           Matrix.h
+|       |       |   |   |   |   MatricesTypes.inl
+|       |       |   |   |   |   
+|       |       |   |   |   +---Matrix
+|       |       |   |   |   |       Matrix.c
+|       |       |   |   |   |       Matrix.h
+|       |       |   |   |   |       
+|       |       |   |   |   \---Matrix4
+|       |       |   |   |           Matrix4.c
+|       |       |   |   |           Matrix4.h
+|       |       |   |   |           
+|       |       |   |   +---Quaternions
+|       |       |   |   |   |   QuaternionTypes.inl
+|       |       |   |   |   |   
+|       |       |   |   |   \---Quaternion
+|       |       |   |   |           Quaternion.c
+|       |       |   |   |           Quaternion.h
 |       |       |   |   |           
 |       |       |   |   \---Vectors
 |       |       |   |       |   VectorsTypes.inl
@@ -350,8 +363,15 @@ D:.
 |   |               |       |   |   |       BigInteger.o
 |   |               |       |   |   |       
 |   |               |       |   |   +---Matrices
-|   |               |       |   |   |   \---Matrix
-|   |               |       |   |   |           Matrix.o
+|   |               |       |   |   |   +---Matrix
+|   |               |       |   |   |   |       Matrix.o
+|   |               |       |   |   |   |       
+|   |               |       |   |   |   \---Matrix4
+|   |               |       |   |   |           Matrix4.o
+|   |               |       |   |   |           
+|   |               |       |   |   +---Quaternions
+|   |               |       |   |   |   \---Quaternion
+|   |               |       |   |   |           Quaternion.o
 |   |               |       |   |   |           
 |   |               |       |   |   \---Vectors
 |   |               |       |   |       +---Vector

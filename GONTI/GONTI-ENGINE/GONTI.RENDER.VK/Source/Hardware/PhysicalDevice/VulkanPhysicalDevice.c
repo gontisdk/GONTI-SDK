@@ -112,11 +112,11 @@ b8 gontiVkPhysicalDeviceMeetsRequirements(
 
         if (outSwapchainSupport->formatCount < 1 || outSwapchainSupport->presentModeCount < 1) {
             if (outSwapchainSupport->formats) {
-                k_free(outSwapchainSupport->formats, outSwapchainSupport->formatCount * sizeof(VkSurfaceFormatKHR), GONTI_MEMORY_TAG_RENDERER);
+                k_free(outSwapchainSupport->formats);
             }
 
             if (outSwapchainSupport->presentMode) {
-                k_free(outSwapchainSupport->presentMode, outSwapchainSupport->presentModeCount * sizeof(VkPresentModeKHR), GONTI_MEMORY_TAG_RENDERER);
+                k_free(outSwapchainSupport->presentMode);
             }
 
             KINFO("Required swapchain support not present. Skipping device...");
@@ -133,7 +133,7 @@ b8 gontiVkPhysicalDeviceMeetsRequirements(
                 avanibleExtensions = k_allocate(avanibleExtensionCount * sizeof(VkExtensionProperties), GONTI_MEMORY_TAG_RENDERER);
                 VK_CHECK(vkEnumerateDeviceExtensionProperties(device, 0, &avanibleExtensionCount, avanibleExtensions));
 
-                u32 requiredExtensionCount = darrayLength(requirements->deviceExtensionNames);
+                u32 requiredExtensionCount = gontiDarrayLength(requirements->deviceExtensionNames);
                 
                 for (u32 i = 0; i < requiredExtensionCount; i++) {
                     b8 found = false;
@@ -147,13 +147,13 @@ b8 gontiVkPhysicalDeviceMeetsRequirements(
 
                     if (!found) {
                         KINFO("Required extension not found: %s. Skipping device...", requirements->deviceExtensionNames[i]);
-                        k_free(avanibleExtensions, avanibleExtensionCount * sizeof(VkExtensionProperties), GONTI_MEMORY_TAG_RENDERER);
+                        k_free(avanibleExtensions);
                         return false;
                     }
                 }
             }
 
-            k_free(avanibleExtensions, avanibleExtensionCount * sizeof(VkExtensionProperties), GONTI_MEMORY_TAG_RENDERER);
+            k_free(avanibleExtensions);
         }
 
         if (requirements->samplerAnisotropy && !features->samplerAnisotropy) {
@@ -183,8 +183,8 @@ b8 gontiVkNumeratePhysicalDevices(GontiVulkanContext* context) {
         requirements.samplerAnisotropy = true;
         requirements.discreteGpu = true;
             
-        requirements.deviceExtensionNames = darrayCreate(const char*);
-        darrayPush(requirements.deviceExtensionNames, &VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+        requirements.deviceExtensionNames = gontiDarrayCreate(const char*);
+        gontiDarrayPush(requirements.deviceExtensionNames, &VK_KHR_SWAPCHAIN_EXTENSION_NAME);
             
         GontiVulkanPhysicalDeviceQueueFamilyInfo queueInfo = {};
 
@@ -268,7 +268,7 @@ void gontiVkPhysicalDeviceRelease(struct GontiVulkanContext* context) {
     KINFO("Release physical device resources...");
     
     if (context->device.vkDevices.devices) {
-        k_free(context->device.vkDevices.devices, context->device.vkDevices.count * sizeof(VkPhysicalDevice), GONTI_MEMORY_TAG_RENDERER);
+        k_free(context->device.vkDevices.devices);
 
         context->device.vkDevices = ZERO_PHYSICAL_DEVICES;
         context->device.vkDevices.devices = 0;
@@ -276,7 +276,7 @@ void gontiVkPhysicalDeviceRelease(struct GontiVulkanContext* context) {
     }
 
     if (context->device.vkDeviceInfo) {
-        k_free(context->device.vkDeviceInfo, context->device.vkDevices.count * sizeof(GontiVulkanDeviceInfo), GONTI_MEMORY_TAG_RENDERER);
+        k_free(context->device.vkDeviceInfo);
 
         context->device.vkDeviceInfo = 0;
     }

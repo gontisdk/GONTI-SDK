@@ -61,4 +61,10 @@
         return realloc(block, size);
     }
 
+    f64 gontiPlatformGetAbsoluteTime() {
+        struct timespec now;
+        clock_gettime(CLOCK_MONOTONIC, &now);
+        return now.tv_sec + now.tv_nsec * 0.000000001;
+    }
+
 #endif

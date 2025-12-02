@@ -36,26 +36,20 @@
             GONTI_MEMORY_TAG_MAX_TAGS
         } GontiMemoryTag;
 
-        struct GontiMemoryStats {
-            u64 totalAllocated;
-            u64 taggedAllocations[GONTI_MEMORY_TAG_MAX_TAGS];
-        };
-        extern struct GontiMemoryStats m_stats;
-
         /* CHAR* */
         KAPI char *k_getMemoryUsageStr();
 
         /*VOID*/
         KAPI void gontiInitializeMemory();
         KAPI void gontiShutdownMemory();
-        KAPI void k_free(void *block, u64 size, GontiMemoryTag memTag);
+        KAPI void k_free(void* block);
 
         /* VOID* */
-        KAPI void *k_allocate(u64 size, GontiMemoryTag memTag);
-        KAPI void *k_zeroMemory(void *block, u64 size);
-        KAPI void *k_copyMemory(void *dest, const void *source, u64 size);
-        KAPI void *k_setMemory(void *dest, i32 value, u64 size);
-        KAPI void *k_reallocate(void *block, u64 size);
+        KAPI void* k_allocate(u64 size, GontiMemoryTag memTag);
+        KAPI void* k_zeroMemory(void* block, u64 size);
+        KAPI void* k_copyMemory(void* dest, const void* source, u64 size);
+        KAPI void* k_setMemory(void* dest, i32 value, u64 size);
+        KAPI void* k_reallocate(void* block, u64 newSize);
 
 #ifdef __cplusplus
     }

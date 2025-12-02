@@ -70,7 +70,7 @@ void gontiVkLogicalDeviceSharedSetup(
 }
 void gontiVkLogicalDeviceSharedFree(GontiVulkanLogicalDeviceQueueSharedSetup* gVkLdQueueSharedSetup) {
     if (gVkLdQueueSharedSetup->indices) {
-        k_free(gVkLdQueueSharedSetup->indices, gVkLdQueueSharedSetup->indexCount * sizeof(u32), GONTI_MEMORY_TAG_RENDERER);
+        k_free(gVkLdQueueSharedSetup->indices);
 
         gVkLdQueueSharedSetup->indices = 0;
     }
@@ -134,13 +134,13 @@ void gontiVkLogicalDeviceQueueFreeInfos(
     GontiVulkanLogicalDeviceQueueSharedInfo* gVkLdQueueSharedInfo
 ) {
     if (gVkLdQueueSharedInfo->queueCreateInfos) {
-        k_free(gVkLdQueueSharedInfo->queueCreateInfos, gVkLdQueueSharedSetup->indexCount * sizeof(VkDeviceQueueCreateInfo), GONTI_MEMORY_TAG_RENDERER);
+        k_free(gVkLdQueueSharedInfo->queueCreateInfos);
 
         gVkLdQueueSharedInfo->queueCreateInfos = 0;
     }
 
     if (gVkLdQueueSharedSetup->queuePriority) {
-        k_free(gVkLdQueueSharedSetup->queuePriority, gVkLdQueueSharedSetup->indexCount * sizeof(f32), GONTI_MEMORY_TAG_RENDERER);
+        k_free(gVkLdQueueSharedSetup->queuePriority);
 
         gVkLdQueueSharedSetup->queuePriority = 0;
     }

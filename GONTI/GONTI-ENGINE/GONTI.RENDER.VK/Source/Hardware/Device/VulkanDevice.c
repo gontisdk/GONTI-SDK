@@ -66,14 +66,14 @@ void gontiVkDeviceRelease(GontiVulkanContext* context) {
     KINFO("Release device resources...");
 
     if (context->device.swapchainSupport.formats) {
-        k_free(context->device.swapchainSupport.formats, context->device.swapchainSupport.formatCount * sizeof(VkSurfaceFormatKHR), GONTI_MEMORY_TAG_RENDERER);
+        k_free(context->device.swapchainSupport.formats);
 
         context->device.swapchainSupport.formats = 0;
         context->device.swapchainSupport.formatCount = 0;
     }
 
     if (context->device.swapchainSupport.presentMode) {
-        k_free(context->device.swapchainSupport.presentMode, context->device.swapchainSupport.presentModeCount * sizeof(VkPresentModeKHR), GONTI_MEMORY_TAG_RENDERER);
+        k_free(context->device.swapchainSupport.presentMode);
 
         context->device.swapchainSupport.presentMode = 0;
         context->device.swapchainSupport.presentModeCount = 0;

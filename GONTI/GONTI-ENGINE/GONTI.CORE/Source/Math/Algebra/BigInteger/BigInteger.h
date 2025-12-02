@@ -17,27 +17,29 @@
             unsigned int capacity;
             unsigned int noDigits;
             int* digits;
+            bool heapAllocated;
         }bigint;
-
-        extern KAPI const bigint BIGINT_ZERO;
-        extern KAPI const bigint BIGINT_ONE;
-        extern KAPI const bigint BIGINT_NEG_ONE;
 
         /*BIGINT*/
         KAPI bigint gontiBigintAllocate(unsigned int capacity);
-        KAPI bigint gontiBigintStrToBigint(char* str);
-        KAPI bigint gontiBigintNewBigint(int i);
-        KAPI bigint gontiBigintNewBigintLL(long long ll);
-        KAPI bigint gontiBigintNewPositiveBigint(unsigned int i);
-        KAPI bigint gontiBigintNewPositiveBigintLL(unsigned long long ll);
+        KAPI bigint gontiBigintZero();
+        KAPI bigint gontiBigintOne();
+        KAPI bigint gontiBigintNegOne();
+        KAPI bigint gontiBigintFromStr(char* str);
+        KAPI bigint gontiBigintFromInt(int i);
+        KAPI bigint gontiBigintFromLL(long long ll);
+        KAPI bigint gontiBigintFromUnsignedInt(unsigned int ui);
+        KAPI bigint gontiBigintFromUnsignedLL(unsigned long long ull);
         KAPI bigint gontiBigintAdd(bigint bi1, bigint bi2);
         KAPI bigint gontiBigintSubtract(bigint bi1, bigint bi2);
-        KAPI bigint gontiBigintMultiplyInt(unsigned int i1, unsigned int i2);
-        KAPI bigint gontiBigintMultiplyLL(unsigned long long ll1, unsigned long long ll2);
+        KAPI bigint gontiBigintMultiplyUnsignedInt(unsigned int i1, unsigned int i2);
+        KAPI bigint gontiBigintMultiplyUnsignedLL(unsigned long long ll1, unsigned long long ll2);
         KAPI bigint gontiBigintMultiply(bigint bi1, bigint bi2);
         KAPI bigint gontiBigintCopyIntArr(int* arr, unsigned int n, bool sign);
         KAPI bigint gontiBigintLongMultiply(bigint bi1, bigint bi2);
         KAPI bigint gontiBigintKaratsubaMultiply(bigint bi1, bigint bi2);
+        KAPI bigint gontiBigintBaseDivide(bigint bi, int d);
+        KAPI bigint gontiBigintBaseMult(bigint bi, int d);
 
         /* CHAR* */
         KAPI char* gontiBigintPtrToString(bigint* bi);
@@ -48,7 +50,13 @@
 
         /*VOID*/
         KAPI void gontiBigintFree(bigint* bi);
+        KAPI void gontiBigintFreeString(char* str);
         KAPI void gontiBigintTrim(bigint* bi);
+        KAPI void gontiBigintDebugPrint(const char* name, bigint* bi);
+
+        /* INT* */
+        KAPI int* gontiBigintRightShiftArr(int* i, int n, int d, int* newSize);
+        KAPI int* gontiBigintLeftShiftArr(int* i, int n, int d, int* newSize);
 
         /*DEFINE*/
         #define BIGINT_BASE 1000000000

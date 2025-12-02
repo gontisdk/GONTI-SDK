@@ -17,10 +17,10 @@ void gontiVkSyncObjectsCreate(GontiVulkanContext* context) {
         return;
     }
 
-    context->imageAvailableSemaphores = darrayReserve(VkSemaphore, context->swapchain.maxFramesInFlight);
-    context->queueCompleteSemaphore = darrayReserve(VkSemaphore, context->swapchain.imageCount);
+    context->imageAvailableSemaphores = gontiDarrayReserve(VkSemaphore, context->swapchain.maxFramesInFlight);
+    context->queueCompleteSemaphore = gontiDarrayReserve(VkSemaphore, context->swapchain.imageCount);
     
-    context->inFlightFences = darrayReserve(GontiVulkanFence, context->swapchain.maxFramesInFlight);
+    context->inFlightFences = gontiDarrayReserve(GontiVulkanFence, context->swapchain.maxFramesInFlight);
 
     for (u8 i = 0; i < context->swapchain.maxFramesInFlight; i++) {
         context->imageAvailableSemaphores[i] = VK_NULL_HANDLE;
@@ -75,7 +75,7 @@ void gontiVkSyncObjectsCreate(GontiVulkanContext* context) {
         KDEBUG("Created fence %d: %p", i, (void*)context->inFlightFences[i].handle);
     }
 
-    context->imagesInFlight = darrayReserve(GontiVulkanFence*, context->swapchain.imageCount);
+    context->imagesInFlight = gontiDarrayReserve(GontiVulkanFence*, context->swapchain.imageCount);
 
     for (u32 i = 0; i < context->swapchain.imageCount; i++) {
         context->imagesInFlight[i] = 0;
@@ -115,19 +115,19 @@ void gontiVkSyncObjectsDestroy(GontiVulkanContext* context) {
     }
 
     if (context->imageAvailableSemaphores) {
-        darrayDestroy(context->imageAvailableSemaphores);
+        gontiDarrayDestroy(context->imageAvailableSemaphores);
         context->imageAvailableSemaphores = 0;
     }
     if (context->queueCompleteSemaphore) {
-        darrayDestroy(context->queueCompleteSemaphore);
+        gontiDarrayDestroy(context->queueCompleteSemaphore);
         context->queueCompleteSemaphore = 0;
     }
     if (context->inFlightFences) {
-        darrayDestroy(context->inFlightFences);
+        gontiDarrayDestroy(context->inFlightFences);
         context->inFlightFences = 0;
     }
     if (context->imagesInFlight) {
-        darrayDestroy(context->imagesInFlight);
+        gontiDarrayDestroy(context->imagesInFlight);
         context->imagesInFlight = 0;
     }
 }

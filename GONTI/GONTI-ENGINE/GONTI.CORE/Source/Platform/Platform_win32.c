@@ -6,6 +6,8 @@
     #include <windowsx.h>
     #include "../String/String.h"
 
+    static f64 clockFrequency;
+
     void gontiPlatformConsoleWrite(const char* message, u8 colour) {
         HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -48,6 +50,9 @@
     void gontiPlatformFree(void* block, b8 aligned) {
         free(block);
     }
+    void gontiPlatformSetClockFrequency(f64 newClockFrequency) {
+        clockFrequency = newClockFrequency;
+    }
 
     void* gontiPlatformAllocate(u64 size, b8 aligned) {
         return malloc(size);
@@ -63,6 +68,15 @@
     }
     void* gontiPlatformReallocate(void* block, u64 size) {
         return realloc(block, size);
+    }
+
+    f64 gontiPlatformGetAbsoluteTime() {
+        LARGE_INTEGER nowTime;
+        QueryPerformanceCounter(&nowTime);
+        return (f64)nowTime.QuadPart * clockFrequency;
+    }
+    f64 gontiPlatformGetClockFrequency() {
+        return clockFrequency;
     }
 
 #endif

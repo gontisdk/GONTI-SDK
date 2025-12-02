@@ -69,13 +69,6 @@ extern "C" {
     KAPI void gontiLoggerShutdownLogging();
     KAPI void gontiLoggerLogOutput(GontiLogLevel level, const char* message, ...);
 
-
-    typedef struct {
-        b8(*initializeLogging)();
-        void(*shutdownLogging)();
-    }GontiLogger;
-    extern KAPI GontiLogger gonti_logger;
-
 #ifdef __cplusplus
 }
 #endif

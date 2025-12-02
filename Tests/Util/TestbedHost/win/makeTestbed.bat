@@ -57,7 +57,7 @@ rem Kompilacja
 set assembly=testbed
 set compilerFlags=-g
 set includeFlags=-I"%workspaceFoldersInclude%" -I"%vcpkgIncludeDir%"
-set linkerFlags=-L"..\bin" -L"%GONTI-CORE-Libs-Dir%" -L"%GONTI-RENDER-Libs-Dir%" -L"%GONTI-RENDER-VK-Libs-Dir%" -L"%GONTI-RUNTIME-Libs-Dir%" -L"%vcpkgLibDir%" -luser32 -lGONTI.CORE -lGONTI.RENDER -lGONTI.RENDER.VK -lGONTI.RUNTIME -lvulkan-1
+set linkerFlags=-L"..\bin" -L"%GONTI-CORE-Libs-Dir%" -L"%GONTI-RENDER-Libs-Dir%" -L"%GONTI-RENDER-VK-Libs-Dir%" -L"%GONTI-RUNTIME-Libs-Dir%" -luser32 -lGONTI.CORE -lGONTI.RENDER -lGONTI.RENDER.VK -lGONTI.RUNTIME -L"%vcpkgLibDir%" -lvulkan-1
 set defines=-D_DEBUG -DKIMPORT
 
 echo Building %assembly%...

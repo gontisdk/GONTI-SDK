@@ -7,54 +7,54 @@
 
             #include "../../Defines/Defines.h"
 
-            #define DARRAY_DEFAULT_CAPACITY 1
-            #define DARRAY_RESIZE_FACTOR 2
+            #define GONTI_DARRAY_DEFAULT_CAPACITY 1
+            #define GONTI_DARRAY_RESIZE_FACTOR 2
 
-            #define darrayCreate(type) \
-                _gontiDarrayCreate(DARRAY_DEFAULT_CAPACITY, sizeof(type))
+            #define gontiDarrayCreate(type) \
+                _gontiDarrayCreate(GONTI_DARRAY_DEFAULT_CAPACITY, sizeof(type))
                 
-                #define darrayReserve(type, capacity) \
-                    _gontiDarrayCreate(capacity, sizeof(type))
+            #define gontiDarrayReserve(type, capacity) \
+                _gontiDarrayCreate(capacity, sizeof(type))
 
-            #define darrayDestroy(array) \
+            #define gontiDarrayDestroy(array) \
                 _gontiDarrayDestroy(array);
 
-            #define darrayPush(array, value) { \
+            #define gontiDarrayPush(array, value) { \
                 typeof(value) temp = value; \
                 array = _gontiDarrayPush(array, &temp); \
             }
 
-            #define darrayPop(array, valuePtr) \
+            #define gontiDarrayPop(array, valuePtr) \
                 _gontiDarrayPop(array, valuePtr)
 
-            #define darrayInsertAt(array, index, value) { \
+            #define gontiDarrayInsertAt(array, index, value) { \
                 typeof(value) temp = value; \
                 array = _gontiDarrayInsertAt(array, index, &temp); \
             }
 
-            #define darrayPopAt(array, index, valuePtr) \
+            #define gontiDarrayPopAt(array, index, valuePtr) \
                 _gontiDarrayPopAt(array, index, valuePtr)
 
-            #define darrayClear(array) \
-                _gontiDarrayFieldSet(array, DARRAY_LENGTH, 0)
+            #define gontiDarrayClear(array) \
+                _gontiDarrayFieldSet(array, GONTI_DARRAY_LENGTH, 0)
 
-            #define darrayCapacity(array) \
-                _gontiDarrayFieldGet(array, DARRAY_CAPACITY)
+            #define gontiDarrayCapacity(array) \
+                _gontiDarrayFieldGet(array, GONTI_DARRAY_CAPACITY)
 
-            #define darrayLength(array) \
-                _gontiDarrayFieldGet(array, DARRAY_LENGTH)
+            #define gontiDarrayLength(array) \
+                _gontiDarrayFieldGet(array, GONTI_DARRAY_LENGTH)
 
-            #define darrayStride(array) \
-                _gontiDarrayFieldGet(array, DARRAY_STRIDE)
+            #define gontiDarrayStride(array) \
+                _gontiDarrayFieldGet(array, GONTI_DARRAY_STRIDE)
 
-            #define darrayLengthSet(array, value) \
-                _gontiDarrayFieldSet(array, DARRAY_LENGTH, value)
+            #define gontiDarrayLengthSet(array, value) \
+                _gontiDarrayFieldSet(array, GONTI_DARRAY_LENGTH, value)
 
             enum {
-                DARRAY_CAPACITY,
-                DARRAY_LENGTH,
-                DARRAY_STRIDE,
-                DARRAY_FIELD_LENGTH
+                GONTI_DARRAY_CAPACITY,
+                GONTI_DARRAY_LENGTH,
+                GONTI_DARRAY_STRIDE,
+                GONTI_DARRAY_FIELD_LENGTH
             };
 
             KAPI void* _gontiDarrayCreate(u64 length, u64 stride);

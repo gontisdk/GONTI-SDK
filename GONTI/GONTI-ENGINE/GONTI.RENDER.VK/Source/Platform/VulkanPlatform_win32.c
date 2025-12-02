@@ -9,7 +9,6 @@
 #include <GONTI/GONTI-ENGINE/GONTI.CORE/Source/Containers/DynamicArray/DynamicArray.h>
 #include <GONTI/GONTI-ENGINE/GONTI.CORE/Source/Memory/Memory.h>
 
-static f64 clockFrequency;
 static LARGE_INTEGER startTime;
 
 b8 gontiVkPlatformStartup(
@@ -109,7 +108,7 @@ b8 gontiVkPlatformStartup(
 
     LARGE_INTEGER frequency;
     QueryPerformanceFrequency(&frequency);
-    clockFrequency = 1.0 / (f64)frequency.QuadPart;
+    gontiPlatformSetClockFrequency(1.0 / (f64)frequency.QuadPart);
     QueryPerformanceCounter(&startTime);
 
     return true;
@@ -142,12 +141,6 @@ b8 gontiVkPlatformCreateVulkanSurface(GontiVulkanPlatformState* platState, Gonti
     return true;
 }
 
-f64 gontiVkPlatformGetAbsoluteTime() {
-    LARGE_INTEGER nowTime;
-    QueryPerformanceCounter(&nowTime);
-    return (f64)nowTime.QuadPart * clockFrequency;
-}
-
 void gontiVkPlatformShutdown(GontiVulkanPlatformState* platState) {
     GontiVulkanInternalStateWindows* state = (GontiVulkanInternalStateWindows*)platState->internalState;
     
@@ -157,15 +150,15 @@ void gontiVkPlatformShutdown(GontiVulkanPlatformState* platState) {
     }
     
     if (platState->internalState) 
-        k_free(platState->internalState, sizeof(GontiVulkanInternalStateWindows), GONTI_MEMORY_TAG_WINDOW);
+        k_free(platState->internalState);
 
     if(platState->vkInternalState) {
-        k_free(platState->vkInternalState, sizeof(GontiVulkanInternalStateVK), GONTI_MEMORY_TAG_RENDERER);
+        k_free(platState->vkInternalState);
     }
 }
 
 void gontiVkPlatformGetRequiredExtensionNames(const char*** namesDarray) {
-    darrayPush(*namesDarray, &"VK_KHR_win32_surface");
+    gontiDarrayPush(*namesDarray, &"VK_KHR_win32_surface");
 }
 
 #endif

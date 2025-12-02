@@ -1,7 +1,11 @@
 #include "Maths.h"
+#include "../Platform/Platform.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+
+static b8 randSeeded = false;
 
 /*
 * VOID
@@ -50,6 +54,7 @@ bool gontiMathContainsUint(unsigned int* arr, unsigned int noElements, unsigned 
 */
 unsigned int gontiMathNumDigits(unsigned int val, unsigned int base) {
 	if (base <= 1) return 0;
+	if (val == 0) return 1;
 
 	unsigned int ret = 0;
 
@@ -66,6 +71,7 @@ unsigned int gontiMathNumDigits(unsigned int val, unsigned int base) {
 */
 unsigned long long gontiMathNumDigitsLL(unsigned long long val, unsigned long long base) {
 	if (base <= 1LL) return 0;
+	if (val == 0) return 1;
 
 	unsigned long long ret = 0;
 
@@ -81,36 +87,46 @@ unsigned long long gontiMathNumDigitsLL(unsigned long long val, unsigned long lo
 * F32 / FLOAT 
 */
 f32 gontiMathSin(f32 x) {
-	return 0;
+	return sinf(x);
 }
 f32 gontiMathCos(f32 x) {
-	return 0;
+	return cosf(x);
 }
 f32 gontiMathTan(f32 x) {
-	return 0;
+	return tanf(x);
 }
 f32 gontiMathAcos(f32 x) {
-	return 0;
+	return acosf(x);
 }
 f32 gontiMathSqrt(f32 x) {
-	return 0;
+	return sqrtf(x);
 }
 f32 gontiMathAbs(f32 x) {
-	return 0;
+	return fabsf(x);
 }
 f32 gontiMathRandomFloat() {
-	return 0;
+	return (float)gontiMathRandom() / (f32)RAND_MAX;
 }
 f32 gontiMathRandomFloatInRange(f32 min, f32 max) {
-	return 0;
+	return (float)gontiMathRandom() / ((f32)RAND_MAX / (max - min));
 }
 
 /* 
 * I32 / INT 
 */
 i32 gontiMathRandom() {
-	return 0;
+	if (!randSeeded) {
+		srand((u32)gontiPlatformGetAbsoluteTime());
+		randSeeded = true;
+	}
+
+	return rand();
 }
 i32 gontiMathRandomInRange(i32 min, i32 max) {
-	return 0;
+	if (!randSeeded) {
+		srand((u32)gontiPlatformGetAbsoluteTime());
+		randSeeded = true;
+	}
+
+	return (rand() % (max - min + 1)) + min;
 }

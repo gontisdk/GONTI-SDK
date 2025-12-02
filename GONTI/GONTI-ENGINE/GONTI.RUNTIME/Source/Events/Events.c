@@ -37,9 +37,9 @@ b8 gontiEventInitialize() {
 b8 gontiEventRegister(u16 code, void* listener, PFN_gontiOnEvent onEvent) {
     if (isInitialized == false) return false;
 
-    if (state.registered[code].events == 0) state.registered[code].events = darrayCreate(GontiRegisteredEvent);
+    if (state.registered[code].events == 0) state.registered[code].events = gontiDarrayCreate(GontiRegisteredEvent);
 
-    u64 registeredCount = darrayLength(state.registered[code].events);
+    u64 registeredCount = gontiDarrayLength(state.registered[code].events);
 
     for (u64 i = 0; i < registeredCount; i++) {
         if (state.registered[code].events[i].listener == listener) {
@@ -51,7 +51,7 @@ b8 gontiEventRegister(u16 code, void* listener, PFN_gontiOnEvent onEvent) {
     GontiRegisteredEvent event;
     event.listener = listener;
     event.callback = onEvent;
-    darrayPush(state.registered[code].events, event);
+    gontiDarrayPush(state.registered[code].events, event);
 
     return true;
 }
@@ -63,14 +63,14 @@ b8 gontiEventUnregister(u16 code, void* listener, PFN_gontiOnEvent onEvent) {
         return false;
     }
 
-    u64 registeredCount = darrayLength(state.registered[code].events);
+    u64 registeredCount = gontiDarrayLength(state.registered[code].events);
 
     for (u64 i = 0; i < registeredCount; i++) {
         GontiRegisteredEvent e = state.registered[code].events[i];
 
         if (e.listener == listener && e.callback == onEvent) {
             GontiRegisteredEvent poppedEvent;
-            darrayPopAt(state.registered[code].events, i, &poppedEvent);
+            gontiDarrayPopAt(state.registered[code].events, i, &poppedEvent);
 
             return true;
         }
@@ -83,7 +83,7 @@ b8 gontiEventFire(u16 code, void* sender, GontiEventContext context) {
 
     if (state.registered[code].events == 0) return false;
 
-    u64 registeredCount = darrayLength(state.registered[code].events);
+    u64 registeredCount = gontiDarrayLength(state.registered[code].events);
 
     for (u64 i = 0; i < registeredCount; i++) {
         GontiRegisteredEvent e = state.registered[code].events[i];
@@ -102,7 +102,7 @@ b8 gontiEventFire(u16 code, void* sender, GontiEventContext context) {
 void gontiEventShutdown() {
     for (u16 i = 0; i < MAX_GONTI_EVENT_CODE; i++) {
         if (state.registered[i].events != NULL) {
-            darrayDestroy(state.registered[i].events);
+            gontiDarrayDestroy(state.registered[i].events);
             state.registered[i].events = NULL;
         }
     }

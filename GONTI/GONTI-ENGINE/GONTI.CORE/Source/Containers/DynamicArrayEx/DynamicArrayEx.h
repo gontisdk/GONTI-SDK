@@ -7,7 +7,7 @@
 
             #include "../../Defines/Defines.h"
 
-            #define DARRAYEX_DEFAULT_SIZE 4
+            #define GONTI_DARRAYEX_DEFAULT_SIZE 4
 
             #define gontiDarrayExCreateSpecificIterator(type) void gontiDarrayEx##type##_iterate(GontiDynamicArrayEx *list, void (*visit)(type * element)) {                                                                               \
                 for (unsigned int i = 0; i < list->size; i++)                               \

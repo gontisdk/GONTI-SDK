@@ -62,7 +62,6 @@
                 };
             };
         } vec4; 
-        typedef vec4 quat;
 
 #ifdef __cplusplus
     }

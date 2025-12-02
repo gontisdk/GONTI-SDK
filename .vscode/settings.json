@@ -89,6 +89,15 @@
         "atomic": "c",
         "functional": "c",
         "memory": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "entry.h": "c",
+        "vulkanapplication.h": "c",
+        "game.h": "c",
+        "corecrt_memory.h": "c",
+        "corecrt.h": "c",
+        "vcruntime_string.h": "c",
+        "compare": "c",
+        "tuple": "c",
+        "xtr1common": "c"
     },
 }

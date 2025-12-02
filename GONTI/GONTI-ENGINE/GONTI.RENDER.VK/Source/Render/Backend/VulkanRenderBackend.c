@@ -44,7 +44,7 @@ i32 findMemoryIndex(u32 typeFilter, u32 propertyFlags) {
 
 void createCommandBuffers() {
     if (!context.graphicsCommandBuffers) {
-        context.graphicsCommandBuffers = darrayReserve(GontiVulkanCommandBuffer, context.swapchain.imageCount);
+        context.graphicsCommandBuffers = gontiDarrayReserve(GontiVulkanCommandBuffer, context.swapchain.imageCount);
 
         for (u32 i = 0; i < context.swapchain.imageCount; i++) {
             k_zeroMemory(&context.graphicsCommandBuffers[i], sizeof(GontiVulkanCommandBuffer));
@@ -129,7 +129,7 @@ b8 recreateSwapchain() {
     context.framebufferWidth = cachedFramebufferWidth;
     context.framebufferHeight = cachedFramebufferHeight;
     context.mainRenderpass.w = context.framebufferWidth;
-    context.mainRenderpass.y = context.framebufferHeight;
+    context.mainRenderpass.h = context.framebufferHeight;
     cachedFramebufferWidth = 0;
     cachedFramebufferHeight = 0;
 
@@ -185,21 +185,21 @@ b8 gontiVkRendererBackendInitialize(const char* appName, struct GontiVulkanPlatf
     VkInstanceCreateInfo createInfo = {VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO};
     createInfo.pApplicationInfo = &appInfo;
 
-    const char** requiredExtensions = darrayCreate(const char*);
-    darrayPush(requiredExtensions, &VK_KHR_SURFACE_EXTENSION_NAME);
+    const char** requiredExtensions = gontiDarrayCreate(const char*);
+    gontiDarrayPush(requiredExtensions, &VK_KHR_SURFACE_EXTENSION_NAME);
     gontiVkPlatformGetRequiredExtensionNames(&requiredExtensions);
 
     #if defined(_DEBUG)
-        darrayPush(requiredExtensions, &VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+        gontiDarrayPush(requiredExtensions, &VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
 
         KDEBUG("Required extensions:");
-        u32 length = darrayLength(requiredExtensions);
+        u32 length = gontiDarrayLength(requiredExtensions);
         for (u32 i = 0; i < length; i++) {
             KDEBUG(requiredExtensions[i]);
         }
     #endif
 
-    createInfo.enabledExtensionCount = darrayLength(requiredExtensions);
+    createInfo.enabledExtensionCount = gontiDarrayLength(requiredExtensions);
     createInfo.ppEnabledExtensionNames = requiredExtensions;
 
     const char** requiredValidationLayerNames = 0;
@@ -208,13 +208,13 @@ b8 gontiVkRendererBackendInitialize(const char* appName, struct GontiVulkanPlatf
     #if defined(_DEBUG)
         KDEBUG("Validation layers enabled. Enumerating...");
 
-        requiredValidationLayerNames = darrayCreate(const char*);
-        darrayPush(requiredValidationLayerNames, &"VK_LAYER_KHRONOS_validation");
-        requiredValidationLayerCount = darrayLength(requiredValidationLayerNames);
+        requiredValidationLayerNames = gontiDarrayCreate(const char*);
+        gontiDarrayPush(requiredValidationLayerNames, &"VK_LAYER_KHRONOS_validation");
+        requiredValidationLayerCount = gontiDarrayLength(requiredValidationLayerNames);
 
         u32 availableLayerCount = 0;
         VK_CHECK(vkEnumerateInstanceLayerProperties(&availableLayerCount, 0));
-        VkLayerProperties* availableLayers = darrayReserve(VkLayerProperties, availableLayerCount);
+        VkLayerProperties* availableLayers = gontiDarrayReserve(VkLayerProperties, availableLayerCount);
         VK_CHECK(vkEnumerateInstanceLayerProperties(&availableLayerCount, availableLayers));
 
         for (u32 i = 0; i < requiredValidationLayerCount; i++) {
@@ -248,9 +248,9 @@ b8 gontiVkRendererBackendInitialize(const char* appName, struct GontiVulkanPlatf
         KDEBUG("Creating Vulkan debugger...");
 
         u32 logSecurity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT 
-                        | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT;
-                        //| VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT
-                        //| VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT;
+                        | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT
+                        | VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT
+                        | VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT;
 
         VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo = {VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT};
         debugCreateInfo.messageSeverity = logSecurity;
@@ -298,7 +298,7 @@ b8 gontiVkRendererBackendInitialize(const char* appName, struct GontiVulkanPlatf
         0
     );
 
-    context.swapchain.framebuffers = darrayReserve(GontiVulkanFramebuffer, context.swapchain.imageCount);
+    context.swapchain.framebuffers = gontiDarrayReserve(GontiVulkanFramebuffer, context.swapchain.imageCount);
     regenerateFramebuffers(&context.swapchain, &context.mainRenderpass);
 
     KINFO("Creating Vulkan command buffers...");
@@ -549,7 +549,7 @@ void gontiVkRendererBackendShutdown() {
             );
             context.graphicsCommandBuffers[i].handle = 0;
         }
-    } darrayDestroy(context.graphicsCommandBuffers);
+    } gontiDarrayDestroy(context.graphicsCommandBuffers);
     context.graphicsCommandBuffers = 0;
 
     KINFO("Destroying Vulkan framebuffers...");

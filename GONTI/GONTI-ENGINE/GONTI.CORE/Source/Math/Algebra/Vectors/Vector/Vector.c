@@ -196,7 +196,7 @@ void gontiVecPowerOf(vec* v, float k) {
 	}
 }
 void gontiVecFree(vec* v) {
-	k_free(v->elements, v->dim * sizeof(float), GONTI_MEMORY_TAG_VECTORS);
+	k_free(v->elements);
 	v->elements = NULL;
 	v->dim = 0;
 }

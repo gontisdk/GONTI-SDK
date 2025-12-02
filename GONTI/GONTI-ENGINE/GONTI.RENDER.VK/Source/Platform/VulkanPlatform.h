@@ -66,8 +66,6 @@
 
         KAPI b8 gontiVkPlatformPumpMessage(GontiVulkanPlatformState* platState);
         KAPI b8 gontiVkPlatformCreateVulkanSurface(GontiVulkanPlatformState* platState, GontiVulkanContext* context);
-        
-        KAPI f64 gontiVkPlatformGetAbsoluteTime();
 
         KAPI void gontiVkPlatformShutdown(GontiVulkanPlatformState* platState);
         KAPI void gontiVkPlatformGetRequiredExtensionNames(const char*** namesDarray);

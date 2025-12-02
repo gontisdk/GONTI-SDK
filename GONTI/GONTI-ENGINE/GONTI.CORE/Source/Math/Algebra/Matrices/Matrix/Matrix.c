@@ -140,7 +140,7 @@ mat gontiMatAdd(mat m1, mat m2) {
 
 	return ret;
 }
-mat gontiMatMultiplicationMat(mat m1, mat m2) {
+mat gontiMatMultiplication(mat m1, mat m2) {
 	if (m1.cols != m2.rows) return MAT_UNDEFINED;
 
 	vec* m1Rows = k_allocate(m1.rows * sizeof(vec), GONTI_MEMORY_TAG_MATH);
@@ -169,8 +169,8 @@ mat gontiMatMultiplicationMat(mat m1, mat m2) {
 		gontiVecFree(m2Cols + c);
 	}
 
-	k_free(m1Rows, m1.rows * sizeof(vec), GONTI_MEMORY_TAG_MATH);
-	k_free(m2Cols, m2.cols * sizeof(vec), GONTI_MEMORY_TAG_MATH);
+	k_free(m1Rows);
+	k_free(m2Cols);
 
 	return ret;
 }
@@ -371,10 +371,10 @@ void gontiMatScalarMultiplicationBy(mat* m, float k) {
 }
 void gontiMatFree(mat* m) {
 	for (unsigned int r = 0; r < m->rows; r++) {
-		k_free(m->elements[r], m->cols * sizeof(float), GONTI_MEMORY_TAG_MATRICES);
+		k_free(m->elements[r]);
 	}
 
-	k_free(m->elements, m->rows * sizeof(float*), GONTI_MEMORY_TAG_MATRICES);
+	k_free(m->elements);
 
 	m->elements = NULL;
 	m->rows = 0;
@@ -533,7 +533,7 @@ float gontiMatDeterminantExclusion(mat* m) {
 
     float ret = _gontiMatDeterminantExclusion(m, 1, 0, skipCols, &noSkipCols);
 
-    k_free(skipCols, m->cols * sizeof(unsigned int), GONTI_MEMORY_TAG_MATH);
+    k_free(skipCols);
 
 	return ret;
 }

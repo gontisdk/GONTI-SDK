@@ -47,9 +47,3 @@ void gontiLoggerLogOutput(GontiLogLevel level, const char* message, ...) {
         gontiPlatformConsoleWrite(outMessage2, level);
     }
 }
-
-/*==[{ m_logger }]==*/
-GontiLogger gonti_logger = {
-    .initializeLogging = gontiLoggerInitializeLogging,
-    .shutdownLogging = gontiLoggerShutdownLogging
-};

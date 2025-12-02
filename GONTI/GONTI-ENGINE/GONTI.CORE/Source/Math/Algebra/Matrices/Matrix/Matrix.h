@@ -1,5 +1,5 @@
-#ifndef MATRICES_H
-#define MATRICES_H
+#ifndef MATRIX_H
+#define MATRIX_H
 
 #ifdef __cplusplus
 	extern "C" {
@@ -14,15 +14,8 @@
 		#include "math.h"
 
 		// Files
+		#include "../MatricesTypes.inl"
 		#include "../../Vectors/Vector/Vector.h"
-
-		/*type mat*/
-
-		typedef struct {
-			unsigned int rows;
-			unsigned int cols;
-			float** elements;
-		}mat;
 
 		extern KAPI const mat MAT_UNDEFINED;
 
@@ -39,7 +32,7 @@
 		KAPI mat gontiMatToColVec(vec* v);
 		KAPI mat gontiMatScalarDivision(mat m, float k);
 		KAPI mat gontiMatAdd(mat m1, mat m2);
-		KAPI mat gontiMatMultiplicationMat(mat m1, mat m2);
+		KAPI mat gontiMatMultiplication(mat m1, mat m2);
 		KAPI mat gontiMatTranspose(mat* m);
 		KAPI mat gontiMatArgumentVector(mat* m, vec* v);
 		KAPI mat gontiMatArgumentMatrix(mat* m1, mat* m2);

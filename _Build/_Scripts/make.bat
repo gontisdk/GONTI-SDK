@@ -1,6 +1,9 @@
 @echo off
 tree /f /a > struct.txt
 
+rem Wyczyść output
+cls
+
 echo "What wanna you do:"
 echo "1 or b - Build engine"
 echo "2 or t - Build testbed"

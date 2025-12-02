@@ -8,11 +8,11 @@
 * DYNAMICARRAYEX
 */
 GontiDynamicArrayEx gontiDarrayExDefaultAllocate() {
-    return gontiDarrayExAllocate(DARRAYEX_DEFAULT_SIZE);
+    return gontiDarrayExAllocate(GONTI_DARRAYEX_DEFAULT_SIZE);
 }
 GontiDynamicArrayEx gontiDarrayExAllocate(unsigned int capacity) {
     if (!capacity) {
-        capacity = DARRAYEX_DEFAULT_SIZE;
+        capacity = GONTI_DARRAYEX_DEFAULT_SIZE;
     }
 
     GontiDynamicArrayEx ret;
@@ -103,12 +103,10 @@ void gontiDarrayExReallocate(GontiDynamicArrayEx* list, unsigned int additionalL
         list->list = k_reallocate(list->list, capacity * sizeof(void*));
 
         if (!list->list) {
-            // allocate in new location
             list->list = k_allocate(capacity * sizeof(void *), GONTI_MEMORY_TAG_DARRAYEX);
             k_copyMemory(list->list, oldMem, capacity * sizeof(void*));
 
-            // update pointers
-            k_free(oldMem, capacity * sizeof(void*) ,GONTI_MEMORY_TAG_DARRAYEX);
+            k_free(oldMem);
         }
 
         list->capacity = capacity;
@@ -125,16 +123,16 @@ void gontiDarrayExIterate(GontiDynamicArrayEx* list, void(*visit)(void* element)
     }
 }
 void gontiDarrayExClear(GontiDynamicArrayEx* list) {
-    k_free(list->list, list->capacity * sizeof(void*), GONTI_MEMORY_TAG_DARRAYEX);
+    k_free(list->list);
     list->size = 0;
-    list->capacity = DARRAYEX_DEFAULT_SIZE;
-    list->list = k_allocate(DARRAYEX_DEFAULT_SIZE * sizeof(void*), GONTI_MEMORY_TAG_DARRAYEX);
+    list->capacity = GONTI_DARRAYEX_DEFAULT_SIZE;
+    list->list = k_allocate(GONTI_DARRAYEX_DEFAULT_SIZE * sizeof(void*), GONTI_MEMORY_TAG_DARRAYEX);
 }
 void gontiDarrayExFree(GontiDynamicArrayEx* list) {
-    k_free(list->list, list->capacity * sizeof(void*), GONTI_MEMORY_TAG_DARRAYEX);
+    k_free(list->list);
 }
 void gontiDarrayExFreeDeep(GontiDynamicArrayEx* list) {
     for (unsigned int i = 0; i < list->size; i++) {
-        k_free(list->list[i], sizeof(void*), GONTI_MEMORY_TAG_DARRAYEX);
+        k_free(list->list[i]);
     }
 }

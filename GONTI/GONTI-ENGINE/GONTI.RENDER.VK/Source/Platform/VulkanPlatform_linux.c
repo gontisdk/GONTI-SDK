@@ -188,23 +188,17 @@ b8 gontiVkPlatformCreateVulkanSurface(GontiVulkanPlatformState* platState, Gonti
     return true;
 }
 
-f64 gontiVkPlatformGetAbsoluteTime() {
-    struct timespec now;
-    clock_gettime(CLOCK_MONOTONIC, &now);
-    return now.tv_sec + now.tv_nsec * 0.000000001;
-}
-
 void gontiVkPlatformShutdown(GontiVulkanPlatformState* platState) {
     GontiVulkanInternalStateLinux* state = (GontiVulkanInternalStateLinux*)platState->internalState;
 
     XAutoRepeatOn(state->display);
     xcb_destroy_window(state->connection, state->window);
 
-    k_free(platState->internalState, sizeof(GontiVulkanInternalStateLinux), GONTI_MEMORY_TAG_WINDOW);
+    k_free(platState->internalState);
 }
 
 void gontiVkPlatformGetRequiredExtensionNames(const char*** namesDarray) {
-    darrayPush(*namesDarray, &"VK_KHR_xcb_surface"); // "VK_KHR_xlib_surface" or "VK_KHR_xcb_surface"?
+    gontiDarrayPush(*namesDarray, &"VK_KHR_xcb_surface"); // "VK_KHR_xlib_surface" or "VK_KHR_xcb_surface"?
 }
 
 #endif

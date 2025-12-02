@@ -2,15 +2,15 @@
 
 #if GONTI_USE_VULKAN
 
-#include <GONTI/GONTI-ENGINE/GONTI.RENDER.VK/Source/Platform/VulkanPlatform.h>
+#include <GONTI/GONTI-ENGINE/GONTI.CORE/Source/Platform/Platform.h>
 
 void gontiVkClockUpdate(Clock* clock) {
     if (clock->startTime != 0) {
-        clock->elapsed = gontiVkPlatformGetAbsoluteTime() - clock->startTime;
+        clock->elapsed = gontiPlatformGetAbsoluteTime() - clock->startTime;
     }
 }
 void gontiVkClockStart(Clock* clock) {
-    clock->startTime = gontiVkPlatformGetAbsoluteTime();
+    clock->startTime = gontiPlatformGetAbsoluteTime();
     clock->elapsed = 0;
 }
 void gontiVkClockStop(Clock* clock) {

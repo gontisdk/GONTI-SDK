@@ -4,56 +4,56 @@
 #include "../../Logging/Logger.h"
 
 void* _gontiDarrayCreate(u64 length, u64 stride) {
-    u64 headerSize = DARRAY_FIELD_LENGTH * sizeof(u64);
+    u64 headerSize = GONTI_DARRAY_FIELD_LENGTH * sizeof(u64);
     u64 arraySize = length * stride;
     u64* newArray = k_allocate(headerSize + arraySize, GONTI_MEMORY_TAG_DARRAY);
 
     k_setMemory(newArray, 0, headerSize + arraySize);
 
-    newArray[DARRAY_CAPACITY] = length;
-    newArray[DARRAY_LENGTH] = 0;
-    newArray[DARRAY_STRIDE] = stride;
+    newArray[GONTI_DARRAY_CAPACITY] = length;
+    newArray[GONTI_DARRAY_LENGTH] = 0;
+    newArray[GONTI_DARRAY_STRIDE] = stride;
 
-    return (void*)(newArray + DARRAY_FIELD_LENGTH);
+    return (void*)(newArray + GONTI_DARRAY_FIELD_LENGTH);
 }
 void _gontiDarrayDestroy(void* array) {
-    u64* header = (u64*)array - DARRAY_FIELD_LENGTH;
-    u64 headerSize = DARRAY_FIELD_LENGTH * sizeof(u64);
-    u64 arraySize = header[DARRAY_CAPACITY] * header[DARRAY_STRIDE];
-    u64 totalSize = headerSize + arraySize;
+    u64* header = (u64*)array - GONTI_DARRAY_FIELD_LENGTH;
+    //u64 headerSize = GONTI_DARRAY_FIELD_LENGTH * sizeof(u64);
+    //u64 arraySize = header[GONTI_DARRAY_CAPACITY] * header[GONTI_DARRAY_STRIDE];
+    //u64 totalSize = headerSize + arraySize;
 
-    k_free(header, totalSize, GONTI_MEMORY_TAG_DARRAY);
+    k_free(header);
 }
 u64 _gontiDarrayFieldGet(void* array, u64 field) {
-    u64* header = (u64*)array - DARRAY_FIELD_LENGTH;
+    u64* header = (u64*)array - GONTI_DARRAY_FIELD_LENGTH;
 
     return header[field];
 }
 void _gontiDarrayFieldSet(void* array, u64 field, u64 value) {
-    u64* header = (u64*)array - DARRAY_FIELD_LENGTH;
+    u64* header = (u64*)array - GONTI_DARRAY_FIELD_LENGTH;
     header[field] = value;
 }
 void* _gontiDarrayResize(void* array) {
-    u64 length = darrayLength(array);
-    u64 stride = darrayStride(array);
+    u64 length = gontiDarrayLength(array);
+    u64 stride = gontiDarrayStride(array);
 
     void* temp = _gontiDarrayCreate(
-        (DARRAY_RESIZE_FACTOR * darrayCapacity(array)),
+        (GONTI_DARRAY_RESIZE_FACTOR * gontiDarrayCapacity(array)),
         stride
     );
 
     k_copyMemory(temp, array, length * stride);
 
-    _gontiDarrayFieldSet(temp, DARRAY_LENGTH, length);
+    _gontiDarrayFieldSet(temp, GONTI_DARRAY_LENGTH, length);
     _gontiDarrayDestroy(array);
 
     return temp;
 }
 void* _gontiDarrayPush(void* array, const void* valuePtr) {
-    u64 length = darrayLength(array);
-    u64 stride = darrayStride(array);
+    u64 length = gontiDarrayLength(array);
+    u64 stride = gontiDarrayStride(array);
 
-    if (length >= darrayCapacity(array)) {
+    if (length >= gontiDarrayCapacity(array)) {
         array = _gontiDarrayResize(array);
     }
 
@@ -61,23 +61,23 @@ void* _gontiDarrayPush(void* array, const void* valuePtr) {
     addr += length * stride;
 
     k_copyMemory((void*)addr, valuePtr, stride);
-    _gontiDarrayFieldSet(array, DARRAY_LENGTH, length + 1);
+    _gontiDarrayFieldSet(array, GONTI_DARRAY_LENGTH, length + 1);
 
     return array;
 }
 void _gontiDarrayPop(void* array, void* dest) {
-    u64 length = darrayLength(array);
-    u64 stride = darrayStride(array);
+    u64 length = gontiDarrayLength(array);
+    u64 stride = gontiDarrayStride(array);
 
     u64 addr = (u64)array;
     addr += ((length - 1) * stride);
 
     k_copyMemory(dest, (void*)addr, stride);
-    _gontiDarrayFieldSet(array, DARRAY_LENGTH, length - 1);
+    _gontiDarrayFieldSet(array, GONTI_DARRAY_LENGTH, length - 1);
 }
 void* _gontiDarrayPopAt(void* array, u64 index, void* dest) {
-    u64 length = darrayLength(array);
-    u64 stride = darrayStride(array);
+    u64 length = gontiDarrayLength(array);
+    u64 stride = gontiDarrayStride(array);
 
     if (index >= length) {
         KERROR("Index outside the bounds of this array! Length: %i, Index %index", length, index);
@@ -95,20 +95,20 @@ void* _gontiDarrayPopAt(void* array, u64 index, void* dest) {
         );
     }
 
-    _gontiDarrayFieldSet(array, DARRAY_LENGTH, length - 1);
+    _gontiDarrayFieldSet(array, GONTI_DARRAY_LENGTH, length - 1);
 
     return array;
 }
 void* _gontiDarrayInsertAt(void* array, u64 index, void* valuePtr) {
-    u64 length = darrayLength(array);
-    u64 stride = darrayStride(array);
+    u64 length = gontiDarrayLength(array);
+    u64 stride = gontiDarrayStride(array);
 
     if (index > length) {
         KERROR("Index outside the bounds of this array! Length: %i, Index %index", length, index);
         return array;
     }
 
-    if (length >= darrayCapacity(array)) {
+    if (length >= gontiDarrayCapacity(array)) {
         array = _gontiDarrayResize(array);
     }
 
@@ -123,7 +123,7 @@ void* _gontiDarrayInsertAt(void* array, u64 index, void* valuePtr) {
     }
 
     k_copyMemory((void*)(addr + (index * stride)), valuePtr, stride);
-    _gontiDarrayFieldSet(array, DARRAY_LENGTH, length + 1);
+    _gontiDarrayFieldSet(array, GONTI_DARRAY_LENGTH, length + 1);
 
     return array;
 }

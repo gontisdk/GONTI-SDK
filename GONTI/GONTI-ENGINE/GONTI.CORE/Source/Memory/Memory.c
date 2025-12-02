@@ -32,7 +32,15 @@ static const char* memoryTagStrings[GONTI_MEMORY_TAG_MAX_TAGS] = {
     "BIGINTEGER..............................."
 };
 
-struct GontiMemoryStats m_stats;
+struct GontiMemoryStats {
+    u64 totalAllocated;
+    u64 taggedAllocations[GONTI_MEMORY_TAG_MAX_TAGS];
+}; static struct GontiMemoryStats gontiMemoryStats;
+
+typedef struct GontiAllocationHeader {
+    u64 size;
+    GontiMemoryTag tag;
+} GontiAllocationHeader;
 
 /* CHAR* */
 char* k_getMemoryUsageStr() {
@@ -47,19 +55,19 @@ char* k_getMemoryUsageStr() {
         char unit[4] = "XiB";
         float amount = 1.0f;
 
-        if (m_stats.taggedAllocations[i] >= gib) {
+        if (gontiMemoryStats.taggedAllocations[i] >= gib) {
             unit[0] = 'G';
-            amount = m_stats.taggedAllocations[i] / (float)gib;
-        } else if (m_stats.taggedAllocations[i] >= mib) {
+            amount = gontiMemoryStats.taggedAllocations[i] / (float)gib;
+        } else if (gontiMemoryStats.taggedAllocations[i] >= mib) {
             unit[0] = 'M';
-            amount = m_stats.taggedAllocations[i] / (float)mib;
-        } else if (m_stats.taggedAllocations[i] >= kib) {
+            amount = gontiMemoryStats.taggedAllocations[i] / (float)mib;
+        } else if (gontiMemoryStats.taggedAllocations[i] >= kib) {
             unit[0] = 'K';
-            amount = m_stats.taggedAllocations[i] / (float)kib;
+            amount = gontiMemoryStats.taggedAllocations[i] / (float)kib;
         } else {
             unit[0] = 'B';
             unit[1] = 0;
-            amount = (float)m_stats.taggedAllocations[i];
+            amount = (float)gontiMemoryStats.taggedAllocations[i];
         }
 
         i32 length = snprintf(buffer + offset, 8000, "  %s-> %.2f%s\n", memoryTagStrings[i], amount, unit);
@@ -72,34 +80,37 @@ char* k_getMemoryUsageStr() {
 
 /*VOID*/
 void gontiInitializeMemory() {
-    gontiPlatformZeroMemory(&m_stats, sizeof(struct GontiMemoryStats));
+    gontiPlatformZeroMemory(&gontiMemoryStats, sizeof(struct GontiMemoryStats));
 }
 void gontiShutdownMemory() {
-    gontiPlatformFree(&m_stats, false);
+    gontiPlatformFree(&gontiMemoryStats, false);
 }
-void k_free(void* block, u64 size, GontiMemoryTag memTag) {
-    if (memTag == GONTI_MEMORY_TAG_UNKOWN) {
-        KWARN("k_free() called using GONTI_MEMORY_TAG_UNKOWN. Re-class this allocation");
-    }
+void k_free(void* block) {
+    GontiAllocationHeader* header = ((GontiAllocationHeader*)block) - 1;
 
-    m_stats.totalAllocated -= 1;
-    m_stats.taggedAllocations[memTag] -= size;
+    gontiMemoryStats.totalAllocated -= 1;
+    gontiMemoryStats.taggedAllocations[header->tag] -= header->size;
 
-    // TODO: Memory aligment
-    gontiPlatformFree(block, false);
+    gontiPlatformFree(header, false);
 }
 
 /* VOID* */
 void* k_allocate(u64 size, GontiMemoryTag memTag) {
-    if (memTag == GONTI_MEMORY_TAG_UNKOWN) KWARN("k_allocate() called using GONTI_MEMORY_TAG_UNKOWN. Re-class this allocation");
+    if (memTag == GONTI_MEMORY_TAG_UNKOWN)
+        KWARN("k_allocate() called with UNKNOWN tag");
 
-    m_stats.totalAllocated += 1;
-    m_stats.taggedAllocations[memTag] += size;
+    gontiMemoryStats.totalAllocated += 1;
 
-    // TODO: Memory aligment
-    void* block = gontiPlatformAllocate(size, false);
+    u64 total = size + sizeof(GontiAllocationHeader);
+    GontiAllocationHeader* header = gontiPlatformAllocate(total, false);
+
+    header->size = size;
+    header->tag = memTag;
+
+    gontiMemoryStats.taggedAllocations[memTag] += size;
+
+    void* block = (void*)(header + 1);
     gontiPlatformZeroMemory(block, size);
-
     return block;
 }
 void* k_zeroMemory(void* block, u64 size) {
@@ -111,6 +122,15 @@ void* k_copyMemory(void* dest, const void* source, u64 size) {
 void* k_setMemory(void* dest, i32 value, u64 size) {
     return gontiPlatformSetMemory(dest, value, size);
 }
-void* k_reallocate(void* block, u64 size) {
-    return gontiPlatformReallocate(block, size);
+void* k_reallocate(void* block, u64 newSize) {
+    GontiAllocationHeader* oldHeader = ((GontiAllocationHeader*)block) - 1;
+
+    gontiMemoryStats.taggedAllocations[oldHeader->tag] -= oldHeader->size;
+    gontiMemoryStats.taggedAllocations[oldHeader->tag] += newSize;
+
+    u64 total = newSize + sizeof(GontiAllocationHeader);
+    GontiAllocationHeader* newHeader = gontiPlatformReallocate(oldHeader, total);
+
+    newHeader->size = newSize;
+    return (void*)(newHeader + 1);
 }

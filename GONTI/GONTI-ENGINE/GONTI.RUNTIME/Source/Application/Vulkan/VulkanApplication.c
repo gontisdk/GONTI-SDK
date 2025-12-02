@@ -111,7 +111,7 @@ b8 gontiVkApplicationRun(u64 fpsLimit, b8 isFpsLimit) {
 
             f64 currentTime = appState.clock.elapsed;
             f64 delta = (currentTime - appState.lastTime);
-            f64 frameStartTime = gontiVkPlatformGetAbsoluteTime();
+            f64 frameStartTime = gontiPlatformGetAbsoluteTime();
 
             if (!appState.entryInst->update(appState.entryInst, (f32)delta)) {
                 KFATAL("Game update failed, shutting down...");
@@ -131,7 +131,7 @@ b8 gontiVkApplicationRun(u64 fpsLimit, b8 isFpsLimit) {
 
             gontiRendererDrawFrame(&packet);
 
-            f64 frameEndTime = gontiVkPlatformGetAbsoluteTime();
+            f64 frameEndTime = gontiPlatformGetAbsoluteTime();
             f64 frameElapsedTime = frameEndTime - frameStartTime;
 
             runningTime += frameElapsedTime;

@@ -42,7 +42,7 @@ void gontiVkFramebufferDestroy(GontiVulkanContext* context, GontiVulkanFramebuff
     framebuffer->handle = 0;
 
     if (framebuffer->attachments) {
-        k_free(framebuffer->attachments, framebuffer->attachmentCount * sizeof(VkImageView), GONTI_MEMORY_TAG_RENDERER);
+        k_free(framebuffer->attachments);
         framebuffer->attachments = 0;
         framebuffer->attachmentCount = 0;
     }
