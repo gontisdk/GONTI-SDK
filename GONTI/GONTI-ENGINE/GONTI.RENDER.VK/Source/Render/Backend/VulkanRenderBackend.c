@@ -28,7 +28,7 @@ static u32 cachedFramebufferHeight = 0;
 
 /*PRIVATE FUNCS*/
 
-i32 findMemoryIndex(u32 typeFilter, u32 propertyFlags) {
+i32 gontiVkFindMemoryIndex(u32 typeFilter, u32 propertyFlags) {
     VkPhysicalDeviceMemoryProperties memoryProperties;
     vkGetPhysicalDeviceMemoryProperties(context.device.physicalDevice, &memoryProperties);
 
@@ -42,7 +42,7 @@ i32 findMemoryIndex(u32 typeFilter, u32 propertyFlags) {
     return -1;
 }
 
-void createCommandBuffers() {
+void gontiVkCreateCommandBuffers() {
     if (!context.graphicsCommandBuffers) {
         context.graphicsCommandBuffers = gontiDarrayReserve(GontiVulkanCommandBuffer, context.swapchain.imageCount);
 
@@ -71,7 +71,7 @@ void createCommandBuffers() {
     KINFO("Vulkan command buffers created");
 }
 
-void regenerateFramebuffers(GontiVulkanSwapchain* swapchain, GontiVulkanRenderpass* renderpass) {
+void gontiVkRegenerateFramebuffers(GontiVulkanSwapchain* swapchain, GontiVulkanRenderpass* renderpass) {
     for (u32 i = 0; i < swapchain->imageCount; i++) {
         KINFO("Vulkan creating framebuffers...");
 
@@ -94,14 +94,14 @@ void regenerateFramebuffers(GontiVulkanSwapchain* swapchain, GontiVulkanRenderpa
     }
 }
 
-b8 recreateSwapchain() {
+b8 gontiVkRecreateSwapchain() {
     if (context.swapchain.recreatingSwapchain) {
-        KDEBUG("recreateSwapchain called when already recreating. Booting...");
+        KDEBUG("gontiVkRecreateSwapchain called when already recreating. Booting...");
         return false;
     } 
 
     if (context.framebufferWidth == 0 || context.framebufferHeight == 0) {
-        KDEBUG("recreateSwapchain called when window < 1 in a dimension. Booting...");
+        KDEBUG("gontiVkRecreateSwapchain called when window < 1 in a dimension. Booting...");
         return false;
     }
 
@@ -148,8 +148,8 @@ b8 recreateSwapchain() {
     context.mainRenderpass.w = context.framebufferWidth;
     context.mainRenderpass.h = context.framebufferHeight;
 
-    regenerateFramebuffers(&context.swapchain, &context.mainRenderpass);
-    createCommandBuffers();
+    gontiVkRegenerateFramebuffers(&context.swapchain, &context.mainRenderpass);
+    gontiVkCreateCommandBuffers();
 
     context.swapchain.recreatingSwapchain = false;
 
@@ -161,7 +161,7 @@ b8 recreateSwapchain() {
 b8 gontiVkRendererBackendInitialize(const char* appName, struct GontiVulkanPlatformState* platState) {
     k_zeroMemory(&context, sizeof(GontiVulkanContext));
     
-    context.findMemoryIndex = findMemoryIndex;
+    context.gontiVkFindMemoryIndex = gontiVkFindMemoryIndex;
     context.allocator = 0; // TODO: custom allocator
 
     if (!platState->get_frame_buffer_size_ptr) {
@@ -299,10 +299,10 @@ b8 gontiVkRendererBackendInitialize(const char* appName, struct GontiVulkanPlatf
     );
 
     context.swapchain.framebuffers = gontiDarrayReserve(GontiVulkanFramebuffer, context.swapchain.imageCount);
-    regenerateFramebuffers(&context.swapchain, &context.mainRenderpass);
+    gontiVkRegenerateFramebuffers(&context.swapchain, &context.mainRenderpass);
 
     KINFO("Creating Vulkan command buffers...");
-    createCommandBuffers();
+    gontiVkCreateCommandBuffers();
 
     context.currentFrame = 0;
 
@@ -354,7 +354,7 @@ b8 gontiVkRendererBackendBeginFrame(f32 deltaTime) {
             return false;
         }
 
-        if (!recreateSwapchain()) {
+        if (!gontiVkRecreateSwapchain()) {
             KERROR("Recreating swapchain failed.");
             return false;
         }
@@ -389,7 +389,7 @@ b8 gontiVkRendererBackendBeginFrame(f32 deltaTime) {
 
     if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR) {
         KINFO("Swapchain out of date, recreating...");
-        if (!recreateSwapchain()) {
+        if (!gontiVkRecreateSwapchain()) {
             KERROR("Failed to recreate swapchain");
             return false;
         }

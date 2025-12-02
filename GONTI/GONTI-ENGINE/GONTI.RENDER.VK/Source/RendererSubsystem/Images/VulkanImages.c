@@ -40,7 +40,7 @@ void gontiVkImageCreate(
     VkMemoryRequirements memoryRequirements;
     vkGetImageMemoryRequirements(context->device.logicalDevice, outImage->handle, &memoryRequirements);
 
-    i32 memoryType = context->findMemoryIndex(memoryRequirements.memoryTypeBits, memoryFlags);
+    i32 memoryType = context->gontiVkFindMemoryIndex(memoryRequirements.memoryTypeBits, memoryFlags);
 
     if (memoryType == -1) {
         KERROR("Required memory type not found. Image not valid.");

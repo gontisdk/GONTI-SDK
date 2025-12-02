@@ -48,7 +48,7 @@
             u64 framebufferSizeGeneration;
             u64 framebufferSizeLastGeneration;
 
-            i32 (*findMemoryIndex)(u32 typeFilter, u32 propertyFlags);
+            i32 (*gontiVkFindMemoryIndex)(u32 typeFilter, u32 propertyFlags);
 
             #if defined(_DEBUG) 
                 VkDebugUtilsMessengerEXT debugMessenger;

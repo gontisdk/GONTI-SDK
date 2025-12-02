@@ -2,6 +2,7 @@ Folder PATH listing for volume DATA
 Volume serial number is 1628-3F99
 D:.
 |   .gitignore
+|   LICENSE
 |   struct.txt
 |   
 +---.continue
@@ -20,7 +21,11 @@ D:.
 |       tasks.json
 |       
 +---GONTI
+|   |   LICENSE
+|   |   
 |   \---GONTI-ENGINE
+|       |   LICENSE
+|       |   
 |       +---GONTI.AUDIO
 |       |   \---Source
 |       +---GONTI.COLLISIONS
@@ -122,6 +127,8 @@ D:.
 |       +---GONTI.GUI
 |       +---GONTI.PHYSICS
 |       +---GONTI.RENDER
+|       |   |   LICENSE
+|       |   |   
 |       |   \---Source
 |       |       +---Config
 |       |       |   \---SetupGraphicBackend
@@ -147,6 +154,8 @@ D:.
 |       +---GONTI.RENDER.DX12
 |       +---GONTI.RENDER.GL
 |       +---GONTI.RENDER.VK
+|       |   |   LICENSE
+|       |   |   
 |       |   \---Source
 |       |       +---Debugger
 |       |       |       VulkanDebugger.c
@@ -227,6 +236,8 @@ D:.
 |       |               VulkanUtil.h
 |       |               
 |       \---GONTI.RUNTIME
+|           |   LICENSE
+|           |   
 |           \---Source
 |               +---Application
 |               |   +---DirectX
@@ -274,26 +285,28 @@ D:.
 |                           
 +---GONTI++
 +---Tests
-|   |   main.c
-|   |   NOTE.md
+|   |   LICENSE
 |   |   
-|   +---UserCode
-|   |       events.c
-|   |       events.h
-|   |       game.c
-|   |       game.h
-|   |       
-|   +---UserSetupEngine
-|   |       entry.c
-|   |       entry.h
-|   |       
-|   \---Util
-|       \---TestbedHost
-|           \---win
-|                   Debug.bat
-|                   makeTestbed.bat
-|                   run.bat
-|                   
+|   \---Source
+|       |   main.c
+|       |   
+|       +---UserCode
+|       |       events.c
+|       |       events.h
+|       |       game.c
+|       |       game.h
+|       |       
+|       +---UserSetupEngine
+|       |       entry.c
+|       |       entry.h
+|       |       
+|       \---Util
+|           \---TestbedHost
+|               \---win
+|                       Debug.bat
+|                       makeTestbed.bat
+|                       run.bat
+|                       
 +---_Build
 |   +---bin
 |   |   \---win32
@@ -493,43 +506,57 @@ D:.
 |                       Makefile.GONTI.RUNTIME.win32.mak
 |                       
 +---_Docs
-|   \---GONTI SDK
-|       \---GONTI
-|           +---Architecture
-|           |       GONTI_Layout.md
+|   +---Development
+|   |   +---BuildDocs
+|   |   +---CompilerDocs
+|   |   |       Compiler Support.md
+|   |   |       Index.md
+|   |   |       LLVM Toolchain.md
+|   |   |       Why Clang.md
+|   |   |       
+|   |   \---DebugDocs
+|   +---GONTI SDK
+|   |   \---GONTI
+|   |       \---GONTI-ENGINE
+|   |           +---GONTI.CORE
+|   |           |   +---How-It-Works
+|   |           |   |       Asserts.md
+|   |           |   |       Defines.md
+|   |           |   |       DynamicArray.md
+|   |           |   |       Logger.md
+|   |           |   |       Memory.md
+|   |           |   |       Platform.md
+|   |           |   |       String.md
+|   |           |   |       
+|   |           |   \---Usage
+|   |           |           Asserts.md
+|   |           |           Defines.md
+|   |           |           DynamicArray.md
+|   |           |           Logger.md
+|   |           |           Memory.md
+|   |           |           Platform.md
+|   |           |           String.md
+|   |           |           
+|   |           \---GONTI.RENDER.VK
+|   |               +---How-It-Works
+|   |               \---Usage
+|   \---Support
+|       +---GraphicsBackends
+|       |   +---DirectX
+|       |   |   +---X11
+|       |   |   \---X12
+|       |   +---OpenGL
+|       |   \---Vulkan
+|       \---OperatingSystems
+|           +---Linux
+|           |       Linux.md
 |           |       
-|           +---Comparisons
-|           |   \---DynamicArrays
-|           |           DynamicArray vs DynamicArrayEx.md
-|           |           
-|           +---Development
-|           |   +---BuildDocs
-|           |   +---CompilerDocs
-|           |   |       Compiler Support.md
-|           |   |       Index.md
-|           |   |       LLVM Toolchain.md
-|           |   |       Why Clang.md
-|           |   |       
-|           |   \---DebugDocs
-|           +---Internals
-|           +---Support
-|           |   +---GraphicsBackends
-|           |   |   +---DirectX
-|           |   |   |   +---X11
-|           |   |   |   \---X12
-|           |   |   +---OpenGL
-|           |   |   \---Vulkan
-|           |   \---OperatingSystems
-|           |       +---Linux
-|           |       |       Linux.md
-|           |       |       
-|           |       +---MacOS
-|           |       |       MacOS.md
-|           |       |       
-|           |       \---Windows
-|           |               Windows.md
-|           |               
-|           \---Usage
+|           +---MacOS
+|           |       MacOS.md
+|           |       
+|           \---Windows
+|                   Windows.md
+|                   
 +---_Logs
 |   +---GONTI
 |   \---GONTI.GUI

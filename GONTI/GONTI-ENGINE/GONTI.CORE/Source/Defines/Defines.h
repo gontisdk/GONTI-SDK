@@ -8,16 +8,16 @@ extern "C" {
     // Define bool type for C
     #ifndef __cplusplus
         #ifndef bool
-	        typedef unsigned char bool;
+            typedef unsigned char bool;
         #endif
 
-	    #ifndef true
-	        #define true 1
-	    #endif
+        #ifndef true
+            #define true 1
+        #endif
 
-	    #ifndef false
-	        #define false 0
-	    #endif
+        #ifndef false
+            #define false 0
+        #endif
 	#endif
 
     // Define NULL if undefined
@@ -178,7 +178,7 @@ extern "C" {
     // Posix
     #    define KPLATFORM_POSIX 1
     #elif __APPLE__
-    // Apple gontiPlatforms
+    // Apple Platforms
     #    define KPLATFORM_APPLE 1
     #    include <TargetConditionals.h>
     #    if TARGET_IPHONE_SIMULATOR
@@ -193,10 +193,10 @@ extern "C" {
     #define VK_USE_PLATFORM_MACOS_MVK
     // Other kinds of Mac OS
     #    else
-    #        error "Unknown Apple gontiPlatform"
+    #        error "Unknown Apple Platform"
     #    endif
     #else
-    #    error "Unknown gontiPlatform!"
+    #    error "Unknown Platform!"
     #endif
 
     #ifdef KEXPORT
@@ -232,8 +232,7 @@ extern "C" {
      * @param max The maximum value of the range.
      * @returns The clamped value.
      */
-    #define KCLAMP(value, min, max) ((value <= min) ? min : (value >= max) ? max \
-                                                                           : value)
+    #define KCLAMP(value, min, max) ((value <= min) ? min : (value >= max) ? max : value)
 
      // Inlining
     #if defined(__clang__) || defined(__gcc__)
@@ -291,15 +290,12 @@ extern "C" {
         return (krange) { get_aligned(offset, granularity), get_aligned(size, granularity) };
     }
 
-    #define KMIN(x, y) (x < y ? x : y)
-    #define KMAX(x, y) (x > y ? x : y)
-
     /**
      * @brief Indicates if the provided flag is set in the given flags int.
      */
     #define FLAG_GET(flags, flag) ((flags & flag) == flag)
 
-     /**
+    /**
       * @brief Sets a flag within the flags int to enabled/disabled.
       *
       * @param flags The flags int to write to.

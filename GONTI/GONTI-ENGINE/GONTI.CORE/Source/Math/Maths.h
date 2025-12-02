@@ -11,7 +11,6 @@
 		#define NUMARGS(type, ...) (sizeof((type[]){(type)0, ##__VA_ARGS__}) / sizeof(type) - 1)
 
 		#define K_MAX(i1, i2) ((i1) > (i2) ? (i1) : (i2))
-
 		#define K_MIN(i1, i2) ((i1) < (i2) ? (i1) : (i2))
 
 		#define K_PI 3.14159265358979323846f
