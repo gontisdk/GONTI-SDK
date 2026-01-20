@@ -23,8 +23,8 @@
             GTAPI void gontiVkApplicationGetFramebufferSizePtr(GtU32* width, GtU32* height);
             GTAPI void gontiVkApplicationGetWidthPtr(GtU32* width);
             GTAPI void gontiVkApplicationGetHeightPtr(GtU32* height);
-            GTAPI void gontiVkApplicationWidthSet(GtU32 width);
-            GTAPI void gontiVkApplicationHeightSet(GtU32 height);
+            GTAPI void gontiVkApplicationSetWidth(GtU32 width);
+            GTAPI void gontiVkApplicationSetHeight(GtU32 height);
             GTAPI void gontiVkApplicationOnResized(GtU32 width, GtU32 height);
 
             /* GtI16 */

@@ -245,6 +245,9 @@ D:.
 |   |           |   
 |   |           \---Source
 |   |               +---Application
+|   |               |   |   GtApp.c
+|   |               |   |   GtApp.h
+|   |               |   |   
 |   |               |   +---DirectX
 |   |               |   |   +---11
 |   |               |   |   \---12
@@ -436,6 +439,8 @@ D:.
 |   |   |               \---GONTI.RUNTIME
 |   |   |                   \---Source
 |   |   |                       +---Application
+|   |   |                       |   |   GtApp.o
+|   |   |                       |   |   
 |   |   |                       |   \---Vulkan
 |   |   |                       |           GtVkApp.o
 |   |   |                       |           
@@ -542,14 +547,16 @@ D:.
     +---Assets
     |   \---shaders
     +---Build
-    |       GONTI.CORE.dll
-    |       GONTI.RENDER.dll
-    |       GONTI.RENDER.VK.dll
-    |       GONTI.RUNTIME.dll
-    |       testbed.exe
-    |       testbed.ilk
-    |       testbed.pdb
-    |       
+    |   |   GONTI.CORE.dll
+    |   |   GONTI.RENDER.dll
+    |   |   GONTI.RENDER.VK.dll
+    |   |   GONTI.RUNTIME.dll
+    |   |   testbed.exe
+    |   |   testbed.ilk
+    |   |   testbed.pdb
+    |   |   
+    |   \---assets
+    |       \---shaders
     +---BuildScripts
     |   \---win
     |           Debug.bat

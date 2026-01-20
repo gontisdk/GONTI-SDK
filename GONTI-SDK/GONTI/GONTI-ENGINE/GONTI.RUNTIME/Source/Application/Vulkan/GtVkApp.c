@@ -192,10 +192,10 @@ void gontiVkApplicationGetWidthPtr(GtU32* width) {
 void gontiVkApplicationGetHeightPtr(GtU32* height) {
     *height = appState.height;
 }
-void gontiVkApplicationWidthSet(GtU32 width) {
+void gontiVkApplicationSetWidth(GtU32 width) {
     appState.width = width;
 }
-void gontiVkApplicationHeightSet(GtU32 height) {
+void gontiVkApplicationSetHeight(GtU32 height) {
     appState.height = height;
 }
 void gontiVkApplicationOnResized(GtU32 width, GtU32 height) {

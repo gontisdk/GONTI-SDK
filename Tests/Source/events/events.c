@@ -107,8 +107,8 @@ GtB8 applicationOnResized(GtU16 code, void* sender, void* listenerInst, GtEventC
         GtU16 height = context.data.GtU16[1];
 
         if (width != gontiVkApplicationGetWidth() || height != gontiVkApplicationGetHeight()) {
-            gontiVkApplicationWidthSet(width);
-            gontiVkApplicationHeightSet(height);
+            gontiVkApplicationSetWidth(width);
+            gontiVkApplicationSetHeight(height);
 
             GTDEBUG("Window resized %i:%i", width, height);
 
