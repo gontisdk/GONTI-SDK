@@ -4,7 +4,9 @@
         {
             "label": "Run Make.bat",
             "type": "shell",
-            "command": "${workspaceFolder}/_Build/_Scripts/make.bat",
+            "windows": {
+                "command": "${workspaceFolder}/make.bat",
+            },
             "options": {
                 "shell": {
                     "executable": "cmd.exe",
@@ -22,6 +24,20 @@
                 "focus": false,
                 "panel": "shared"
             }
+        },
+        {
+            "label": "Run Post-Build",
+            "type": "shell",
+            "windows": {
+                "command": "${workspaceFolder}/Tests/ShaderScripts/win/PostBuild.bat"
+            },
+            "linux": {
+                "command": "${workspaceFolder}/Tests/ShaderScripts/linux/PostBuild.sh"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build"
         }
     ]
 }

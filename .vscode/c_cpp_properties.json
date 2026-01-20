@@ -9,7 +9,7 @@
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE",
-                "KEXPORT",
+                "GT_EXPORT",
                 "_GNU_SOURCE"
             ],
             "compilerPath": "/usr/bin/clang",
@@ -33,7 +33,7 @@
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE",
-                "KEXPORT"
+                "GT_EXPORT"
             ],
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c17",
@@ -43,7 +43,7 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/",
+                "${workspaceFolder}/GONTI-SDK/",
                 
                 /*TODO: Enter here path to your liblares includes for Windows*/
                 "C:/Program Files (x86)/VulkanSDK/1.4.321.1/Include"
@@ -52,7 +52,7 @@
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE",
-                "KEXPORT"
+                "GT_EXPORT"
             ],
             "windowsSdkVersion": "10.0.18362.0",
             "compilerPath": "C:/Program Files/LLVM/bin/clang.exe",
